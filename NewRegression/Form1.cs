@@ -30,6 +30,7 @@ namespace NewRegression
         int[] extr = new int[4];  //массив точек, подозрительных на экстремум функции
         double eps, eps1, h, h1, d, IPS, T3, IPR, T5, maf, F30;     // точность, шаг, абсолютное значение шага
         int k;                         //кол-во итераций
+        
         public Form1()
         {
             InitializeComponent();
@@ -40,7 +41,7 @@ namespace NewRegression
                 dataGridView1.Rows[0].Cells[i].Value = st[i];
             openFileDialog1.Filter = "Text files(*.txt)|*.txt"; //в диалоге открытия файла устанавливаем фильтр только для отображения текстовых файлов
             chart1.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
-            //this.MouseMove += chart1_MouseMove;
+            
 
         }
 
@@ -132,7 +133,6 @@ namespace NewRegression
             for (int i = 0; i < n; i++)
             {
                 double p1 = -a[1] * (x1[i] - a[2]) * (x1[i] - a[2]);
-                //double p2 = -a[4] * (x1[i] - a[5]) * (x1[i] - a[5]);
                 T1[i] = a[0] * Math.Exp(p1);
             }
             return T1;
@@ -144,7 +144,6 @@ namespace NewRegression
             for (int i = 0; i < n; i++)
             {
                 double p1 = -a[1] * ((x1[i] - a[2]) * (x1[i] - a[2]));
-                //double p2 = -a[4] * (x1[i] - a[5]) * (x1[i] - a[5]);
                 T1[i] = (-2) * (a[0] * a[1] * (x1[i] - a[2])) * Math.Exp(p1);
             }
             return T1;
@@ -171,13 +170,11 @@ namespace NewRegression
                 if (result.PointIndex > -1 && result.ChartArea != null)
                 {
                     label35.Text = "Y-value: " + result.Series.Points[result.PointIndex].YValues[0].ToString();
-                    label35.Location = new Point(1400, e.Y + 25);
+                    label35.Location = new Point(1150, e.Y + 25);
                 }
 
-
-
-                label34.Text = string.Concat(string.Concat(Math.Round(xValue, 2).ToString(), " , "), Math.Round(yValue, 2).ToString());
-                label34.Location = new Point(1400, e.Y - 5);
+                label34.Text = string.Concat(string.Concat(Math.Round(xValue, 3).ToString(), " , "), Math.Round(yValue, 3).ToString());
+                label34.Location = new Point(1150, e.Y - 5);
             }
             catch
             {
@@ -274,21 +271,11 @@ namespace NewRegression
 
         }
 
-        /*private void button2_Click(object sender, EventArgs e)
-        {
-            Chart chart1 = new Chart();
-            chart1.Serializer.Save(stream);
-
-
-            //new Form().Show();
-        }*/
-
         public double[] Fk2(double[] x1, double[] a)      // расчет массива значений аппроксимирующей функции
         {
             double[] T2 = new double[n];
             for (int i = 0; i < n; i++)
             {
-                //double p1 = -a[1] * (x1[i] - a[2]) * (x1[i] - a[2]);
                 double p2 = -a[4] * (x1[i] - a[5]) * (x1[i] - a[5]);
                 T2[i] = a[3] * Math.Exp(p2);
             }
@@ -301,7 +288,6 @@ namespace NewRegression
             for (int i = 0; i < n; i++)
             {
                 double p2 = a[4] * ((x1[i] - a[5]) * (x1[i] - a[5]));
-                //double p2 = -a[4] * (x1[i] - a[5]) * (x1[i] - a[5]);
                 T2[i] = (-2) * (a[3] * a[4] * (x1[i] - a[5]) * Math.Exp(p2) );
             }
             return T2;
@@ -317,9 +303,6 @@ namespace NewRegression
                     - (2 * a[3] * a[4] * (x1[i] - a[5])
                     * Math.Exp(-a[4] * ((x1[i] - a[5]) * (x1[i] - a[5]))));
             }
-
-
-
             return Ysh;
         }
 
@@ -342,15 +325,71 @@ namespace NewRegression
 
         private void button1_Click(object sender, EventArgs e)
         {
-            /*p[0] = Convert.ToDouble(textBox1.Text.Trim());
-            p[1] = Convert.ToDouble(textBox2.Text.Trim());
-            p[2] = Convert.ToDouble(textBox3.Text.Trim());
-            p[3] = Convert.ToDouble(textBox4.Text.Trim());
-            p[4] = Convert.ToDouble(textBox5.Text.Trim());
-            p[5] = Convert.ToDouble(textBox6.Text.Trim());
-            chart1.Series[0].Enabled = false;
-            chart1.Series[2].Enabled = false;
-            chart1.Series[3].Enabled = false;*/
+            try
+            {
+                Stat statFrm = new Stat();
+                double sumMean = 0;
+                double sumSKVO = 0;
+                double SKO = 0;
+                double MSE = 0;
+                double disp = 0;
+                double student = 0;
+                n = dataGridView1.Rows.Count - 1;
+
+                for (int i = 0; i < dataGridView1.Rows.Count - 1; ++i)
+                {
+                    sumMean += Convert.ToDouble(dataGridView1.Rows[i + 1].Cells[3].Value);
+                }
+                double mean = sumMean / n;
+
+                String[] st = { "N п/п", "F(x)", "M-F(x)", "(M-F(x))^2" }; //заголовки столбцов для исходной таблицы
+
+
+
+                for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+                {
+                    statFrm.dataGridView1.Rows.Add();
+                }
+
+                for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+                {
+                    statFrm.dataGridView1.Rows[i + 1].Cells[0].Value = i + 1;
+                    statFrm.dataGridView1.Rows[i + 1].Cells[1].Value = dataGridView1.Rows[i + 1].Cells[3].Value;
+                    statFrm.dataGridView1.Rows[i + 1].Cells[2].Value = Convert.ToDouble(statFrm.dataGridView1.Rows[i + 1].Cells[1].Value) - mean;
+                    statFrm.dataGridView1.Rows[i + 1].Cells[3].Value = Math.Pow((Convert.ToDouble(statFrm.dataGridView1.Rows[i + 1].Cells[1].Value) - mean), 2);
+                }
+
+                for (int i = 0; i < 4; i++)
+                {
+                    statFrm.dataGridView1.Rows[0].Cells[i].Value = st[i];
+                }
+
+                for (int i = 0; i < dataGridView1.Rows.Count - 1; ++i)
+                {
+                    sumSKVO += Convert.ToDouble(statFrm.dataGridView1.Rows[i + 1].Cells[3].Value);
+                }
+
+                disp = sumSKVO / (n - 1);
+
+                SKO = Math.Sqrt(disp);
+                MSE = SKO / Math.Sqrt(n - 1);
+
+                statFrm.txtMean.Text = mean.ToString();
+                statFrm.txtSKVO.Text = sumSKVO.ToString();
+                statFrm.txtDisp.Text = disp.ToString();
+                statFrm.textSKO.Text = SKO.ToString();
+                statFrm.txtMSE.Text = MSE.ToString();
+
+                //student = mean1 - mean2 / sqrt(Math.Pow((MSE1), 2) + Math.Pow((MSE2), 2));
+
+                this.Hide();
+                statFrm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Проверьте, что все поля в таблицы заполнены!" + Environment.NewLine +
+                    ex.Message);
+            }
         }
 
         private void btnCalc_Click(object sender, EventArgs e)
@@ -369,14 +408,7 @@ namespace NewRegression
                 p[2] = Convert.ToDouble(textBox9.Text.Trim());
                 p[3] = Convert.ToDouble(textBox10.Text.Trim());
                 p[4] = Convert.ToDouble(textBox11.Text.Trim());
-                p[5] = Convert.ToDouble(textBox12.Text.Trim());
-
-                /*psh[0] = Convert.ToDouble(textBox7.Text.Trim());
-                psh[1] = Convert.ToDouble(textBox8.Text.Trim());
-                psh[2] = Convert.ToDouble(textBox9.Text.Trim());
-                psh[3] = Convert.ToDouble(textBox10.Text.Trim());
-                psh[4] = Convert.ToDouble(textBox11.Text.Trim());
-                psh[5] = Convert.ToDouble(textBox12.Text.Trim());*/
+                p[5] = Convert.ToDouble(textBox12.Text.Trim());                
 
                 //расчет методом покоординатного спуска
                 eps = 0.001; //погрешность
@@ -415,21 +447,6 @@ namespace NewRegression
                 textBox6.Text = p[5].ToString("F6");
 
                 Ysh = Fsh(x, p);
-                /*for (int i = 0; i < n; i++)
-                    kvsh[i] = (y[i] - Ysh[i]) * (y[i] - Ysh[i]);
-                k1sh = Fk1sh(x, psh);
-                for (int i = 0; i < n; i++)
-                    kv1sh[i] = (y[i] - k1sh[i]) * (y[i] - k1sh[i]);
-                k2sh = Fk2sh(x, psh);
-                for (int i = 0; i < n; i++)
-                    kv2sh[i] = (y[i] - k2sh[i]) * (y[i] - k2sh[i]);*/
-
-                /*textBox28.Text = psh[0].ToString("F6");
-                textBox29.Text = psh[1].ToString("F6");
-                textBox30.Text = psh[2].ToString("F6");
-                textBox31.Text = psh[3].ToString("F6");
-                textBox32.Text = psh[4].ToString("F6");
-                textBox33.Text = psh[5].ToString("F6");*/
 
                 Ysh2 = Fsh2(x, p);
 
@@ -470,10 +487,8 @@ namespace NewRegression
                 textBox18.Text = ym.ToString("F6");
 
                 double testt = Ysh.Max();
-
-                //textBox21.Text = testt.ToString();
+                
                 int max = Array.IndexOf(Ysh, Ysh.Max());
-                ///textBox20.Text = x.GetValue(max).ToString();
                 xm = p[2];
                 ym = (-2) * (p[0] * p[1] * (xm - p[2])) *
                     Math.Exp(-p[1] * ((xm - p[2]) * (xm - p[2])))
@@ -489,19 +504,8 @@ namespace NewRegression
                     Math.Exp(-p[4] * ((xm - p[5]) * (xm - p[5]))));
                 textBox22.Text = xm.ToString();
                 textBox23.Text = ym.ToString();
-
-
-                /*var dataPoint = chart1.Series["Series5"].Points.FindByValue(1.0, "Y");
-                var xxxx = dataPoint.XValue;
-
-                textBox20.Text = xxxx.ToString();*/
-                /*var dataPoint2 = chart1.Series["Series6"].Points.FindMinByValue();
-                double yyyy = dataPoint2.XValue;*/
-                /*textBox23.Text = Ysh.Min().ToString();*/
+                
                 int min = Array.IndexOf(Ysh, Ysh.Min());
-                /*textBox22.Text = x.GetValue(min).ToString();*/
-                //textBox22.Text = yyyy.ToString();
-
 
                 T3 = Convert.ToDouble(y1.GetValue(max));
                 T5 = Convert.ToDouble(y1.GetValue(min));
@@ -525,11 +529,12 @@ namespace NewRegression
                     maf = m1;
                 else
                     maf = m2;
-                //double T3 = max1 / test;
 
                 F30 = maf * 0.3;
                 textBox27.Text = F30.ToString();
+                btnStat.Enabled = true;
             }
+            
             catch(Exception ex)
             {
                 MessageBox.Show("Сперва нужно загрузить файлы" + Environment.NewLine + 
@@ -563,7 +568,6 @@ namespace NewRegression
             while (a == false && d1 > eps1);
         }
 
-
         private void Form1_Load(object sender, EventArgs e)
         {
             textBox7.Text = "";
@@ -574,7 +578,6 @@ namespace NewRegression
             textBox12.Text = "";
 
         }
-
 
         private void chart1_MouseWheel(object sender, MouseEventArgs e)
         {
