@@ -83,7 +83,7 @@
             this.btnLoad = new System.Windows.Forms.Button();
             this.btnCalc = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnStat = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.textBox20 = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
@@ -111,7 +111,6 @@
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.button2 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -270,7 +269,7 @@
             this.groupBox2.Controls.Add(this.label10);
             this.groupBox2.Controls.Add(this.label9);
             this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Location = new System.Drawing.Point(15, 474);
+            this.groupBox2.Location = new System.Drawing.Point(15, 417);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(647, 64);
             this.groupBox2.TabIndex = 8;
@@ -408,7 +407,7 @@
             this.groupBox3.Controls.Add(this.textBox16);
             this.groupBox3.Controls.Add(this.label18);
             this.groupBox3.Controls.Add(this.label17);
-            this.groupBox3.Location = new System.Drawing.Point(15, 545);
+            this.groupBox3.Location = new System.Drawing.Point(15, 488);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(647, 64);
             this.groupBox3.TabIndex = 13;
@@ -555,7 +554,7 @@
             this.chart1.Series.Add(series4);
             this.chart1.Series.Add(series5);
             this.chart1.Series.Add(series6);
-            this.chart1.Size = new System.Drawing.Size(786, 863);
+            this.chart1.Size = new System.Drawing.Size(540, 680);
             this.chart1.TabIndex = 16;
             this.chart1.Text = "chart1";
             title1.ForeColor = System.Drawing.Color.Navy;
@@ -579,6 +578,7 @@
             // 
             // btnCalc
             // 
+            this.btnCalc.Enabled = false;
             this.btnCalc.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btnCalc.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.btnCalc.Location = new System.Drawing.Point(536, 95);
@@ -593,15 +593,18 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // button1
+            // btnStat
             // 
-            this.button1.Location = new System.Drawing.Point(584, 327);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(116, 36);
-            this.button1.TabIndex = 19;
-            this.button1.Text = "Блок статистики";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnStat.Enabled = false;
+            this.btnStat.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnStat.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.btnStat.Location = new System.Drawing.Point(584, 327);
+            this.btnStat.Name = "btnStat";
+            this.btnStat.Size = new System.Drawing.Size(116, 36);
+            this.btnStat.TabIndex = 19;
+            this.btnStat.Text = "Блок статистики";
+            this.btnStat.UseVisualStyleBackColor = true;
+            this.btnStat.Click += new System.EventHandler(this.button1_Click);
             // 
             // groupBox4
             // 
@@ -613,7 +616,7 @@
             this.groupBox4.Controls.Add(this.textBox23);
             this.groupBox4.Controls.Add(this.label22);
             this.groupBox4.Controls.Add(this.label23);
-            this.groupBox4.Location = new System.Drawing.Point(18, 615);
+            this.groupBox4.Location = new System.Drawing.Point(18, 558);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(647, 64);
             this.groupBox4.TabIndex = 22;
@@ -694,7 +697,7 @@
             this.groupBox5.Controls.Add(this.textBox27);
             this.groupBox5.Controls.Add(this.label26);
             this.groupBox5.Controls.Add(this.label27);
-            this.groupBox5.Location = new System.Drawing.Point(18, 685);
+            this.groupBox5.Location = new System.Drawing.Point(18, 628);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(647, 64);
             this.groupBox5.TabIndex = 23;
@@ -874,28 +877,17 @@
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(584, 369);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(116, 36);
-            this.button2.TabIndex = 26;
-            this.button2.Text = "Показать график";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1510, 887);
-            this.Controls.Add(this.button2);
+            this.ClientSize = new System.Drawing.Size(1264, 700);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.label35);
             this.Controls.Add(this.label34);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnStat);
             this.Controls.Add(this.btnCalc);
             this.Controls.Add(this.btnLoad);
             this.Controls.Add(this.chart1);
@@ -973,12 +965,11 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.TextBox textBox19;
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.Button btnLoad;
         private System.Windows.Forms.Button btnCalc;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnStat;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.TextBox textBox20;
         private System.Windows.Forms.Label label20;
@@ -1006,7 +997,7 @@
         private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Button button2;
+        public System.Windows.Forms.DataGridView dataGridView1;
     }
 }
 
