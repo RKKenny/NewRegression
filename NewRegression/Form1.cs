@@ -30,7 +30,7 @@ namespace NewRegression
         double[] Ysh = new double[n_max]; //производная 1
         double[] Ysh2 = new double[n_max]; //производная 2
         int[] extr = new int[4];  //массив точек, подозрительных на экстремум функции
-        double eps, eps1, h, h1, d, IPS, T3, IPR, T5, maf, F30;     // точность, шаг, абсолютное значение шага
+        double eps, eps1, h, h1, d, IPS, T3, IPR, T5, mafx, FX30, FY30, mafy;     // точность, шаг, абсолютное значение шага
         int k;                         //кол-во итераций
         double[] kvalues;
 
@@ -71,9 +71,10 @@ namespace NewRegression
 
         double[] dInitialApp;
         double[] dAFE = new double[4];
-        double[] dFE = new double[4];
+        double[] dFE = new double[6];
+        double[] dFE2 = new double[6];
         double[] dCoeffs = new double[6];
-        double[] dIndexes = new double[4];
+        double[] dIndexes = new double[10];
 
         double dESMax1;
         double dESMax2;
@@ -81,6 +82,7 @@ namespace NewRegression
         string sInitialApp;
         string sAFExtremums;
         string sFExtremums;
+        string sFExtremums2;
         string sCoeffs;
         string sIndexes;
         string sYsh;
@@ -116,9 +118,17 @@ namespace NewRegression
             dataGridView1.RowCount = 11;    //задаем кол-во строк и столбцов каждой таблицы на форме
             dataGridView1.ColumnCount = 7;
             String[] st = { "N п/п", "X", "Y", "F(x)", "(Y-F(x))^2", "F'", "F''" }; //заголовки столбцов для исходной таблицы
-            for (int i = 0; i < 7; i++)
+            //for (int i = 0; i < 7; i++)
                 //dataGridView1.Rows[0].Cells[i].Value = st[i];
                 openFileDialog1.Filter = "Text files(*.txt)|*.txt"; //в диалоге открытия файла устанавливаем фильтр только для отображения текстовых файлов
+            dataGridView3.ColumnCount = 4;
+            dataGridView2.ColumnCount = 4;
+            String[] st1 = { "N п/п", "F(x)", "M-F(x)", "(M-F(x))^2" }; //заголовки столбцов для исходной таблицы
+            for (int i = 0; i < 4; i++)
+            {
+                dataGridView3.Rows[0].Cells[i].Value = st1[i];
+                dataGridView2.Rows[0].Cells[i].Value = st1[i];
+            }
             chart1.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
 
             Select.Enabled = false;
@@ -427,17 +437,88 @@ namespace NewRegression
             dAFE[2] = xm;
             dAFE[3] = ym;
 
-            textBox21.Text = Ysh.Max().ToString();
-            dFE[1] = Convert.ToDouble(Ysh.Max());
             int max = Array.IndexOf(Ysh, Ysh.Max());
-            textBox20.Text = x.GetValue(max).ToString();
-            dFE[0] = Convert.ToDouble(x.GetValue(max));
 
-            textBox23.Text = Ysh.Min().ToString();
-            dFE[3] = Convert.ToDouble(Ysh.Min());
+            List<double> numbersListYsh = new List<double>();
+            for (int i = 0; i < dataGridView1.Rows.Count - 1; ++i)
+            {
+                numbersListYsh.Add(Convert.ToDouble(dataGridView1.Rows[i + 1].Cells[5].Value));
+            }
+
+            List<double> findPeaksYsh(List<double> numbers)
+            {
+                List<double> peaksYsh = new List<double>();
+                for (int i = 1; i < numbers.Count - 1; i++)
+                {
+                    if (i > 0 && i < (numbersListYsh.Count - 1))
+                    {
+                        if (numbers[i] >= numbers[i + 1] && numbers[i] >= numbers[i - 1])
+                        {
+                            peaksYsh.Add(numbers[i]);
+                        }
+                    }
+                }
+                int xv;
+                double peak1 = (from number in peaksYsh orderby number descending select number).Distinct().Skip(0).First();
+                double peak2 = (from number in peaksYsh orderby number descending select number).Distinct().Skip(1).First();
+
+                xv = numbersListYsh.IndexOf(peak1);
+                txtYshX1m.Text = x.GetValue(xv).ToString();
+                txtYshY1m.Text = peak1.ToString();
+
+                xv = numbersListYsh.IndexOf(peak2);
+                txtYshX2m.Text = x.GetValue(xv).ToString();
+                txtYshY2m.Text = peak2.ToString();
+
+                xv = numbersListYsh.IndexOf(numbers.Min());
+                txtYshX1mi.Text = x.GetValue(xv).ToString();
+                txtYshY1mi.Text = numbers.Min().ToString();
+
+                return peaksYsh;
+            }
+            findPeaksYsh(numbersListYsh);
+
             int min = Array.IndexOf(Ysh, Ysh.Min());
-            textBox22.Text = x.GetValue(min).ToString();
-            dFE[2] = Convert.ToDouble(x.GetValue(min));
+
+            List<double> numbersListYsh2 = new List<double>();
+            for (int i = 0; i < dataGridView1.Rows.Count - 1; ++i)
+            {
+                numbersListYsh2.Add(Convert.ToDouble(dataGridView1.Rows[i + 1].Cells[6].Value));
+            }
+
+            List<double> findPeaksYsh2(List<double> numbers)
+            {
+                List<double> peaksYsh2 = new List<double>();
+                for (int i = 1; i < numbers.Count - 1; i++)
+                {
+                    if (i > 0 && i < (numbersListYsh2.Count - 1))
+                    {
+                        if (numbers[i] >= numbers[i + 1] && numbers[i] >= numbers[i - 1])
+                        {
+                            peaksYsh2.Add(numbers[i]);
+                        }
+                    }
+                }
+                int xv;
+                //IEnumerable<double> peakwo = peakst.Distinct();
+                double peak1 = (from number in peaksYsh2 orderby number descending select number).Distinct().Skip(0).First();
+                double peak2 = (from number in peaksYsh2 orderby number descending select number).Distinct().Skip(1).First();
+
+                xv = numbersListYsh2.IndexOf(peak1);
+                txtYsh2X1m.Text = x.GetValue(xv).ToString();
+                txtYsh2Y1m.Text = peak1.ToString();
+
+                xv = numbersListYsh2.IndexOf(peak2);
+                txtYsh2X2m.Text = x.GetValue(xv).ToString();
+                txtYsh2Y2m.Text = peak2.ToString();
+
+                xv = numbersListYsh2.IndexOf(numbers.Min());
+                txtYsh2X1mi.Text = x.GetValue(xv).ToString();
+                txtYsh2Y1mi.Text = numbers.Min().ToString();
+
+                return peaksYsh2;
+            }
+            findPeaksYsh2(numbersListYsh2);
 
             T3 = Convert.ToDouble(y1.GetValue(max));
             T5 = Convert.ToDouble(y1.GetValue(min));
@@ -450,25 +531,44 @@ namespace NewRegression
             IPS = max1 / T3;
             IPR = Math.Abs(min1 / T5);
 
-            textBox24.Text = IPS.ToString();
-            dIndexes[0] = Convert.ToDouble(IPS);
-            textBox25.Text = IPR.ToString();
-            dIndexes[1] = Convert.ToDouble(IPR);
-            textBox26.Text = Math.Abs(div).ToString();
-            dIndexes[2] = Convert.ToDouble(Math.Abs(div));
+            txtIndexIPS.Text = IPS.ToString();
+            txtIndexIPR.Text = IPR.ToString();
+            txtIndexYshDiv.Text = Math.Abs(div).ToString();
 
-            double m1 = Convert.ToDouble(textBox16.Text.Trim());
-            double m2 = Convert.ToDouble(textBox18.Text.Trim());
+            double mx1 = Convert.ToDouble(textBox15.Text.Trim());
+            double mx2 = Convert.ToDouble(textBox17.Text.Trim());
 
-            if (m1 > m2)
-                maf = m1;
+            if (mx1 > mx2)
+                mafx = mx1;
             else
-                maf = m2;
-            //double T3 = max1 / test;
+                mafx = mx2;
 
-            F30 = maf * 0.3;
-            textBox27.Text = F30.ToString();
-            dIndexes[3] = Convert.ToDouble(F30);
+            FX30 = mafx + 0.3 * mafx;
+            txtIndexT3.Text = FX30.ToString();
+
+            double A1 = k1.Max();
+            double A2 = k2.Max();
+            double A12div = A1 / A2;
+            double A21div = A2 / A1;
+            txtIndexA1.Text = A1.ToString();
+            txtIndexA2.Text = A2.ToString();
+            txtIndexA12Div.Text = A12div.ToString();
+            txtIndexA21Div.Text = A21div.ToString();
+
+            double my1 = Convert.ToDouble(textBox16.Text.Trim());
+            double my2 = Convert.ToDouble(textBox18.Text.Trim());
+
+            if (my1 > my2)
+                mafy = my1;
+            else
+                mafy = my2;
+
+            FY30 = mafy - 0.3 * mafy;
+            txtIndexY30.Text = FY30.ToString();
+
+            txtIndexVDM.Text = mafx.ToString();
+
+            btnStat.Enabled = true;
         }
 
         public double f_o()// вычисление суммы отклонений - целевая функция
@@ -516,7 +616,7 @@ namespace NewRegression
 
             chart1.Visible = true;
 
-            //DBCreate();
+            DBCreate();
 
             double[] temp1 = { 20.3, 17.9, 65.36, 20.1, 9.8, 4.7 };
             string temp2 = "14.7/56/2.8/9.3/7.1/3.63/9.65";
@@ -525,44 +625,57 @@ namespace NewRegression
             //string temp22 = ArrayToString(temp1);
         }
 
+        public string GetApplicationExecutableDirectoryName()
+        {
+            return Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
+        }
+
+        public const string ConstBackSlash = "\\";
+
         private void DBCreate()
         {
-            //создание новой базы
-            SQLiteConnection.CreateFile("MyDatabase.sqlite");
+            if (!File.Exists(GetApplicationExecutableDirectoryName() + ConstBackSlash + "MyDatabase.sqlite"))
+            {
+                MessageBox.Show("Первый запуск программы. Создаю базу данных" +
+                    Environment.NewLine + "Если база данных уже существует и Вы видите это сообщение, то" +
+                    Environment.NewLine + "немедленно сделайте бекап! (Папка с программой\\MyDatabase.sqlite)");
+                //создание новой базы
+                SQLiteConnection.CreateFile("MyDatabase.sqlite");
 
-            //создание коннекшна
-            m_dbConnection = new SQLiteConnection("Data Source=MyDatabase.sqlite;Version=3;");
+                //создание коннекшна
+                m_dbConnection = new SQLiteConnection("Data Source=MyDatabase.sqlite;Version=3;");
 
-            //открытие коннекшна
-            m_dbConnection.Open();
+                //открытие коннекшна
+                m_dbConnection.Open();
 
-            DBQueryExecute(@"
+                DBQueryExecute(@"
                 CREATE TABLE Entry(
                 id_entry integer PRIMARY KEY, 
                 datemark varchar(20), 
                 name varchar(60)
                 )
                 ");
-            DBQueryExecute(@"
+                DBQueryExecute(@"
                 CREATE TABLE OrdinaryContraction(
                 id_entry integer PRIMARY KEY REFERENCES Entry(id_entry), 
                 InitialApproximation text, 
                 AFExtremums text, 
                 FExtremums text, 
+                FExtremums2 text, 
                 Coeffs text, 
                 Indexes text,
                 Derivative1 text,
                 Derivative2 text
                 )
                 ");
-            DBQueryExecute(@"
+                DBQueryExecute(@"
                 CREATE TABLE ExtrasystolicContraction(
                 id_entry integer PRIMARY KEY REFERENCES Entry(id_entry),
                 Max1 real, 
                 Max2 real
                 )
                 ");
-            DBQueryExecute(@"
+                DBQueryExecute(@"
                 CREATE TABLE Source(
                 id_entry integer PRIMARY KEY REFERENCES Entry(id_entry), 
                 x string, 
@@ -573,8 +686,14 @@ namespace NewRegression
                 )
                 ");
 
-            //закрытие коннекшна
-            m_dbConnection.Close();
+                //закрытие коннекшна
+                m_dbConnection.Close();
+            }
+            else
+            {
+                MessageBox.Show("База данных загружена");
+            }
+            
         }
 
         private void DBQueryExecute(string str)
@@ -794,6 +913,7 @@ namespace NewRegression
                 sInitialApp = ArrayToString(dInitialApp);
                 sAFExtremums = ArrayToString(dAFE);
                 sFExtremums = ArrayToString(dFE);
+                sFExtremums2 = ArrayToString(dFE2);
                 sCoeffs = ArrayToString(dCoeffs);
                 sIndexes = ArrayToString(dIndexes);
                 sYsh = ArrayToString(Ysh);
@@ -801,7 +921,7 @@ namespace NewRegression
 
                 //ЗАПИСЬ В БАЗУ
                 sql = @"INSERT INTO OrdinaryContraction
-                Values (@id, @InitApp, @AFE, @FE, @Coeffs, @Indexes, @Df1, @Df2)";
+                Values (@id, @InitApp, @AFE, @FE, @FE2, @Coeffs, @Indexes, @Df1, @Df2)";
                 using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
                 {
                     c.Open();
@@ -811,6 +931,7 @@ namespace NewRegression
                         cmd.Parameters.AddWithValue("@InitApp", sInitialApp);
                         cmd.Parameters.AddWithValue("@AFE", sAFExtremums);
                         cmd.Parameters.AddWithValue("@FE", sFExtremums);
+                        cmd.Parameters.AddWithValue("@FE2", sFExtremums2);
                         cmd.Parameters.AddWithValue("@Coeffs", sCoeffs);
                         cmd.Parameters.AddWithValue("@Indexes", sIndexes);
                         cmd.Parameters.AddWithValue("@Df1", sYsh);
@@ -964,6 +1085,7 @@ namespace NewRegression
                                 sInitialApp = Convert.ToString(rdr["InitialApproximation"]);
                                 sAFExtremums = Convert.ToString(rdr["AFextremums"]);
                                 sFExtremums = Convert.ToString(rdr["FExtremums"]);
+                                sFExtremums2 = Convert.ToString(rdr["FExtremums2"]);
                                 sCoeffs = Convert.ToString(rdr["Coeffs"]);
                                 sIndexes = Convert.ToString(rdr["Indexes"]);
                                 sYsh = Convert.ToString(rdr["Derivative1"]);
@@ -977,6 +1099,7 @@ namespace NewRegression
                 dInitialApp = StringToArray(sInitialApp);
                 dAFE = StringToArray(sAFExtremums);
                 dFE = StringToArray(sFExtremums);
+                dFE2 = StringToArray(sFExtremums2);
                 dCoeffs = StringToArray(sCoeffs);
                 dIndexes = StringToArray(sIndexes);
                 Ysh = StringToArray(sYsh);
@@ -994,15 +1117,30 @@ namespace NewRegression
                 textBox17.Text = Convert.ToString(Math.Round(dAFE[2], 3));
                 textBox18.Text = Convert.ToString(Math.Round(dAFE[3], 3));
 
-                textBox20.Text = Convert.ToString(Math.Round(dFE[0], 3));
-                textBox21.Text = Convert.ToString(Math.Round(dFE[1], 3));
-                textBox22.Text = Convert.ToString(Math.Round(dFE[2], 3));
-                textBox23.Text = Convert.ToString(Math.Round(dFE[3], 3));
+                txtYshX1m.Text = Convert.ToString(Math.Round(dFE[0], 3));
+                txtYshY1m.Text = Convert.ToString(Math.Round(dFE[1], 3));
+                txtYshX2m.Text = Convert.ToString(Math.Round(dFE[2], 3));
+                txtYshX2m.Text = Convert.ToString(Math.Round(dFE[3], 3));
+                txtYshX1mi.Text = Convert.ToString(Math.Round(dFE[4], 3));
+                txtYshX1mi.Text = Convert.ToString(Math.Round(dFE[5], 3));
 
-                textBox24.Text = Convert.ToString(Math.Round(dIndexes[0], 3));
-                textBox25.Text = Convert.ToString(Math.Round(dIndexes[1], 3));
-                textBox26.Text = Convert.ToString(Math.Round(dIndexes[2], 3));
-                textBox27.Text = Convert.ToString(Math.Round(dIndexes[3], 3));
+                txtYsh2X1m.Text = Convert.ToString(Math.Round(dFE2[0], 3));
+                txtYsh2Y1m.Text = Convert.ToString(Math.Round(dFE2[1], 3));
+                txtYsh2X2m.Text = Convert.ToString(Math.Round(dFE2[2], 3));
+                txtYsh2X2m.Text = Convert.ToString(Math.Round(dFE2[3], 3));
+                txtYsh2X1mi.Text = Convert.ToString(Math.Round(dFE2[4], 3));
+                txtYsh2X1mi.Text = Convert.ToString(Math.Round(dFE2[5], 3));
+
+                txtIndexIPS.Text = Convert.ToString(Math.Round(dIndexes[0], 3));
+                txtIndexIPR.Text = Convert.ToString(Math.Round(dIndexes[1], 3));
+                txtIndexYshDiv.Text = Convert.ToString(Math.Round(dIndexes[2], 3));
+                txtIndexT3.Text = Convert.ToString(Math.Round(dIndexes[3], 3));
+                txtIndexA1.Text = Convert.ToString(Math.Round(dIndexes[4], 3));
+                txtIndexA2.Text = Convert.ToString(Math.Round(dIndexes[5], 3));
+                txtIndexA12Div.Text = Convert.ToString(Math.Round(dIndexes[6], 3));
+                txtIndexA21Div.Text = Convert.ToString(Math.Round(dIndexes[7], 3));
+                txtIndexY30.Text = Convert.ToString(Math.Round(dIndexes[8], 3));
+                txtIndexVDM.Text = Convert.ToString(Math.Round(dIndexes[9], 3));
 
                 textBox7.Text = Convert.ToString(Math.Round(dInitialApp[0], 3));
                 textBox8.Text = Convert.ToString(Math.Round(dInitialApp[1], 3));
@@ -1124,15 +1262,30 @@ namespace NewRegression
             textBox17.Text = "";
             textBox18.Text = "";
 
-            textBox20.Text = "";
-            textBox21.Text = "";
-            textBox22.Text = "";
-            textBox23.Text = "";
+            txtYshX1m.Text = "";
+            txtYshY1m.Text = "";
+            txtYshX2m.Text = "";
+            txtYshX2m.Text = "";
+            txtYshX1mi.Text = "";
+            txtYshX1mi.Text = "";
 
-            textBox24.Text = "";
-            textBox25.Text = "";
-            textBox26.Text = "";
-            textBox27.Text = "";
+            txtYsh2X1m.Text = "";
+            txtYsh2Y1m.Text = "";
+            txtYsh2X2m.Text = "";
+            txtYsh2X2m.Text = "";
+            txtYsh2X1mi.Text = "";
+            txtYsh2X1mi.Text = "";
+
+            txtIndexIPS.Text = "";
+            txtIndexIPR.Text = "";
+            txtIndexYshDiv.Text = "";
+            txtIndexT3.Text = "";
+            txtIndexA1.Text = "";
+            txtIndexA2.Text = "";
+            txtIndexA12Div.Text = "";
+            txtIndexA21Div.Text = "";
+            txtIndexY30.Text = "";
+            txtIndexVDM.Text = "";
 
             textBox28.Text = Convert.ToString(max[0]);
             textBox29.Text = Convert.ToString(max[1]);
@@ -1155,6 +1308,77 @@ namespace NewRegression
             }
 
             return max;
+        }
+
+        private void btnStat_Click(object sender, EventArgs e)
+        {
+            //try
+            //{
+                double sumMean = 0;
+                double sumSKVO = 0;
+                double SKO = 0;
+                double MSE = 0;
+                double disp = 0;
+                double VAR = 0;
+                n = dataGridView1.Rows.Count - 1;
+
+                for (int i = 0; i < dataGridView1.Rows.Count - 1; ++i)
+                {
+                    sumMean += Convert.ToDouble(dataGridView1.Rows[i + 1].Cells[5].Value);
+                }
+                double mean = sumMean / n;
+
+            
+
+
+
+
+            for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+                {
+                    dataGridView3.Rows.Add();
+                }
+
+                for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+                {
+                    dataGridView3.Rows[i + 1].Cells[0].Value = i + 1;
+                    dataGridView3.Rows[i + 1].Cells[1].Value = dataGridView1.Rows[i + 1].Cells[5].Value;
+                    dataGridView3.Rows[i + 1].Cells[2].Value = Convert.ToDouble(dataGridView3.Rows[i + 1].Cells[1].Value) - mean;
+                    dataGridView3.Rows[i + 1].Cells[3].Value = Math.Pow((Convert.ToDouble(dataGridView3.Rows[i + 1].Cells[1].Value) - mean), 2);
+                }
+
+                
+
+                for (int i = 0; i < dataGridView1.Rows.Count - 1; ++i)
+                {
+                    sumSKVO += Convert.ToDouble(dataGridView3.Rows[i + 1].Cells[3].Value);
+                }
+
+                disp = sumSKVO / (n - 1);
+
+                SKO = Math.Sqrt(disp);
+                MSE = SKO / Math.Sqrt(n - 1);
+                VAR = SKO / mean;
+
+                txtMean1.Text = mean.ToString();
+                txtSKVO1.Text = sumSKVO.ToString();
+                txtDisp.Text = disp.ToString();
+                textSKO.Text = SKO.ToString();
+                txtMSE1.Text = MSE.ToString();
+                txtVar.Text = VAR.ToString();
+
+                //this.Hide();
+                tabControl1.SelectTab(tabPage3);/*
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Проверьте, что все поля в таблицы заполнены!" + Environment.NewLine +
+                    ex.Message);
+            }*/
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            dataGridView3.Columns.AddRange();
         }
 
         private double[] SmoothArray(double[] Arr)
