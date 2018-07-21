@@ -17,7 +17,7 @@ namespace NewRegression
             InitializeComponent();
             
             dataGridView1.RowCount = 1;    //задаем кол-во строк и столбцов каждой таблицы на форме
-            dataGridView1.ColumnCount = 4;
+            dataGridView1.ColumnCount = 14;
 
             dataGridView2.RowCount = 1;    //задаем кол-во строк и столбцов каждой таблицы на форме
             dataGridView2.ColumnCount = 4;
