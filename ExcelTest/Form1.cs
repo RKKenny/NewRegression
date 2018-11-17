@@ -35,6 +35,8 @@ namespace ExcelTest
         //List<double> dInitialApp = new List<double>();
         List<double> kv = new List<double>(); //массив квадратичных отклонений
         bool Anchorr;
+        bool Anchorr1; //чтобы не задействовать кнопки на графике
+
 
         List<double> p = new List<double>();     //массив параметров
 
@@ -117,6 +119,7 @@ namespace ExcelTest
 
             if (ext == ".txt")
             {
+                Anchorr1 = true;
                 Anchorr = false;
                 //ss.Clear();
                 ss = new List<string>();
@@ -162,6 +165,7 @@ namespace ExcelTest
             }
             else
             {
+                Anchorr1 = true;
                 Anchorr = true;
                 CompressionRateOverview = Convert.ToInt32(NmCompRate.Text);
                 dataGridView1.Rows.Clear();
@@ -527,6 +531,7 @@ namespace ExcelTest
         private void BtnSave_Click(object sender, EventArgs e)
         {
             SaveToDB();
+            DBLoad();
         }
 
         public void SaveToDB()
@@ -917,8 +922,7 @@ namespace ExcelTest
         private void button4_Click(object sender, EventArgs e)
         {
             tabControl1.SelectTab(TbP4);
-            DBLoad();
-            
+            DBLoad();            
         }
 
         public void DBLoad()
@@ -970,373 +974,414 @@ namespace ExcelTest
 
         private void button3_Click(object sender, EventArgs e)
         {
-            int SelectedId = Convert.ToInt32(dataGridView3[0, dataGridView3.CurrentCell.RowIndex].Value);
-            
-            x.Clear();
-            y.Clear();
-            ye.Clear();
-            k1.Clear();
-            k2.Clear();
-            kv.Clear();
-            Ysh.Clear();
-            Ysh2.Clear();
-
-            string sql = "select * from Entry where id_entry = @SelectedId";
-            using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
+            try
             {
-                c.Open();
-                using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
+                int SelectedId = Convert.ToInt32(dataGridView3[0, dataGridView3.CurrentCell.RowIndex].Value);
+
+                x.Clear();
+                y.Clear();
+                ye.Clear();
+                k1.Clear();
+                k2.Clear();
+                kv.Clear();
+                Ysh.Clear();
+                Ysh2.Clear();
+
+                string sql = "select * from Entry where id_entry = @SelectedId";
+                using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
                 {
-                    cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
-                    using (SQLiteDataReader rdr = cmd.ExecuteReader())
+                    c.Open();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
                     {
-                        while (rdr.Read())
+                        cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
+                        using (SQLiteDataReader rdr = cmd.ExecuteReader())
                         {
-                            //перевести всё из базы в строковые переменные
-                            BDField.Text = (Convert.ToString(rdr["name"]));
+                            while (rdr.Read())
+                            {
+                                //перевести всё из базы в строковые переменные
+                                BDField.Text = (Convert.ToString(rdr["name"]));
+                            }
                         }
                     }
+                    c.Close();
                 }
-                c.Close();
-            }
 
-            sql = "select * from Source where id_entry = @SelectedId";
-            using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
-            {
-                c.Open();
-                using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
+                sql = "select * from Source where id_entry = @SelectedId";
+                using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
                 {
-                    cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
-                    using (SQLiteDataReader rdr = cmd.ExecuteReader())
+                    c.Open();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
                     {
-                        while (rdr.Read())
+                        cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
+                        using (SQLiteDataReader rdr = cmd.ExecuteReader())
                         {
-                            //перевести всё из базы в строковые переменные
-                            x.Add(Convert.ToDouble(rdr["x"], CultureInfo.InvariantCulture));
-                            y.Add(Convert.ToDouble(rdr["y1"], CultureInfo.InvariantCulture));
-                            ye.Add(Convert.ToDouble(rdr["ye"], CultureInfo.InvariantCulture));
-                            k1.Add(Convert.ToDouble(rdr["k1"], CultureInfo.InvariantCulture));
-                            k2.Add(Convert.ToDouble(rdr["k2"], CultureInfo.InvariantCulture));
-                            kv.Add(Convert.ToDouble(rdr["kv"], CultureInfo.InvariantCulture));
-                            Ysh.Add(Convert.ToDouble(rdr["Ysh"], CultureInfo.InvariantCulture));
-                            Ysh2.Add(Convert.ToDouble(rdr["Ysh2"], CultureInfo.InvariantCulture));
+                            while (rdr.Read())
+                            {
+                                //перевести всё из базы в строковые переменные
+                                x.Add(Convert.ToDouble(rdr["x"], CultureInfo.InvariantCulture));
+                                y.Add(Convert.ToDouble(rdr["y1"], CultureInfo.InvariantCulture));
+                                ye.Add(Convert.ToDouble(rdr["ye"], CultureInfo.InvariantCulture));
+                                k1.Add(Convert.ToDouble(rdr["k1"], CultureInfo.InvariantCulture));
+                                k2.Add(Convert.ToDouble(rdr["k2"], CultureInfo.InvariantCulture));
+                                kv.Add(Convert.ToDouble(rdr["kv"], CultureInfo.InvariantCulture));
+                                Ysh.Add(Convert.ToDouble(rdr["Ysh"], CultureInfo.InvariantCulture));
+                                Ysh2.Add(Convert.ToDouble(rdr["Ysh2"], CultureInfo.InvariantCulture));
+                            }
                         }
                     }
+                    c.Close();
                 }
-                c.Close();
-            }
 
-            sql = "select * from InitApp where id_entry = @SelectedId";
-            using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
-            {
-                c.Open();
-                using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
+                sql = "select * from InitApp where id_entry = @SelectedId";
+                using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
                 {
-                    cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
-                    using (SQLiteDataReader rdr = cmd.ExecuteReader())
+                    c.Open();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
                     {
-                        while (rdr.Read())
+                        cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
+                        using (SQLiteDataReader rdr = cmd.ExecuteReader())
                         {
-                            //перевести всё из базы в строковые переменные
-                            txtA0start.Text = Convert.ToString(rdr["a0"]);
-                            txtB0start.Text = Convert.ToString(rdr["b0"]);
-                            txtC0start.Text = Convert.ToString(rdr["c0"]);
-                            txtA1start.Text = Convert.ToString(rdr["a1"]);
-                            txtB1start.Text = Convert.ToString(rdr["b1"]);
-                            txtC1start.Text = Convert.ToString(rdr["c1"]);
+                            while (rdr.Read())
+                            {
+                                //перевести всё из базы в строковые переменные
+                                txtA0start.Text = Convert.ToString(rdr["a0"]);
+                                txtB0start.Text = Convert.ToString(rdr["b0"]);
+                                txtC0start.Text = Convert.ToString(rdr["c0"]);
+                                txtA1start.Text = Convert.ToString(rdr["a1"]);
+                                txtB1start.Text = Convert.ToString(rdr["b1"]);
+                                txtC1start.Text = Convert.ToString(rdr["c1"]);
+                            }
                         }
                     }
+                    c.Close();
                 }
-                c.Close();
-            }
 
-            sql = "select * from Koef where id_entry = @SelectedId";
-            using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
-            {
-                c.Open();
-                using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
+                sql = "select * from Koef where id_entry = @SelectedId";
+                using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
                 {
-                    cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
-                    using (SQLiteDataReader rdr = cmd.ExecuteReader())
+                    c.Open();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
                     {
-                        while (rdr.Read())
+                        cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
+                        using (SQLiteDataReader rdr = cmd.ExecuteReader())
                         {
-                            //перевести всё из базы в строковые переменные
-                            txtA0kof.Text = Convert.ToString(rdr["a0"]);
-                            txtB0kof.Text = Convert.ToString(rdr["b0"]);
-                            txtC0kof.Text = Convert.ToString(rdr["c0"]);
-                            txtA1kof.Text = Convert.ToString(rdr["a1"]);
-                            txtB1kof.Text = Convert.ToString(rdr["b1"]);
-                            txtC1kof.Text = Convert.ToString(rdr["c1"]);
+                            while (rdr.Read())
+                            {
+                                //перевести всё из базы в строковые переменные
+                                txtA0kof.Text = Convert.ToString(rdr["a0"]);
+                                txtB0kof.Text = Convert.ToString(rdr["b0"]);
+                                txtC0kof.Text = Convert.ToString(rdr["c0"]);
+                                txtA1kof.Text = Convert.ToString(rdr["a1"]);
+                                txtB1kof.Text = Convert.ToString(rdr["b1"]);
+                                txtC1kof.Text = Convert.ToString(rdr["c1"]);
+                            }
                         }
                     }
+                    c.Close();
                 }
-                c.Close();
-            }
 
-            sql = "select * from AppEx where id_entry = @SelectedId";
-            using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
-            {
-                c.Open();
-                using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
+                sql = "select * from AppEx where id_entry = @SelectedId";
+                using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
                 {
-                    cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
-                    using (SQLiteDataReader rdr = cmd.ExecuteReader())
+                    c.Open();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
                     {
-                        while (rdr.Read())
+                        cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
+                        using (SQLiteDataReader rdr = cmd.ExecuteReader())
                         {
-                            //перевести всё из базы в строковые переменные
-                            txty1X1m.Text = Convert.ToString(rdr["x1"]);
-                            txty1Y1m.Text = Convert.ToString(rdr["y1"]);
-                            txty1X2m.Text = Convert.ToString(rdr["x2"]);
-                            txty1Y2m.Text = Convert.ToString(rdr["y2"]);
+                            while (rdr.Read())
+                            {
+                                //перевести всё из базы в строковые переменные
+                                txty1X1m.Text = Convert.ToString(rdr["x1"]);
+                                txty1Y1m.Text = Convert.ToString(rdr["y1"]);
+                                txty1X2m.Text = Convert.ToString(rdr["x2"]);
+                                txty1Y2m.Text = Convert.ToString(rdr["y2"]);
+                            }
                         }
                     }
+                    c.Close();
                 }
-                c.Close();
-            }
 
-            sql = "select * from YshEx where id_entry = @SelectedId";
-            using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
-            {
-                c.Open();
-                using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
+                sql = "select * from YshEx where id_entry = @SelectedId";
+                using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
                 {
-                    cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
-                    using (SQLiteDataReader rdr = cmd.ExecuteReader())
+                    c.Open();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
                     {
-                        while (rdr.Read())
+                        cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
+                        using (SQLiteDataReader rdr = cmd.ExecuteReader())
                         {
-                            //перевести всё из базы в строковые переменные
-                            txtYshX1m.Text = Convert.ToString(rdr["x1"]);
-                            txtYshY1m.Text = Convert.ToString(rdr["y1"]);
-                            txtYshX2m.Text = Convert.ToString(rdr["x2"]);
-                            txtYshY2m.Text = Convert.ToString(rdr["y2"]);
-                            txtYshX1mi.Text = Convert.ToString(rdr["xm"]);
-                            txtYshY1mi.Text = Convert.ToString(rdr["ym"]);
+                            while (rdr.Read())
+                            {
+                                //перевести всё из базы в строковые переменные
+                                txtYshX1m.Text = Convert.ToString(rdr["x1"]);
+                                txtYshY1m.Text = Convert.ToString(rdr["y1"]);
+                                txtYshX2m.Text = Convert.ToString(rdr["x2"]);
+                                txtYshY2m.Text = Convert.ToString(rdr["y2"]);
+                                txtYshX1mi.Text = Convert.ToString(rdr["xm"]);
+                                txtYshY1mi.Text = Convert.ToString(rdr["ym"]);
+                            }
                         }
                     }
+                    c.Close();
                 }
-                c.Close();
-            }
 
-            sql = "select * from Ysh2Ex where id_entry = @SelectedId";
-            using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
-            {
-                c.Open();
-                using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
+                sql = "select * from Ysh2Ex where id_entry = @SelectedId";
+                using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
                 {
-                    cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
-                    using (SQLiteDataReader rdr = cmd.ExecuteReader())
+                    c.Open();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
                     {
-                        while (rdr.Read())
+                        cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
+                        using (SQLiteDataReader rdr = cmd.ExecuteReader())
                         {
-                            //перевести всё из базы в строковые переменные
-                            txtYsh2X1m.Text = Convert.ToString(rdr["x1"]);
-                            txtYsh2Y1m.Text = Convert.ToString(rdr["y1"]);
-                            txtYsh2X2m.Text = Convert.ToString(rdr["x2"]);
-                            txtYsh2Y2m.Text = Convert.ToString(rdr["y2"]);
-                            txtYsh2X1mi.Text = Convert.ToString(rdr["xm"]);
-                            txtYsh2Y1mi.Text = Convert.ToString(rdr["ym"]);
+                            while (rdr.Read())
+                            {
+                                //перевести всё из базы в строковые переменные
+                                txtYsh2X1m.Text = Convert.ToString(rdr["x1"]);
+                                txtYsh2Y1m.Text = Convert.ToString(rdr["y1"]);
+                                txtYsh2X2m.Text = Convert.ToString(rdr["x2"]);
+                                txtYsh2Y2m.Text = Convert.ToString(rdr["y2"]);
+                                txtYsh2X1mi.Text = Convert.ToString(rdr["xm"]);
+                                txtYsh2Y1mi.Text = Convert.ToString(rdr["ym"]);
+                            }
                         }
                     }
+                    c.Close();
                 }
-                c.Close();
-            }
 
-            sql = "select * from Indexes where id_entry = @SelectedId";
-            using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
-            {
-                c.Open();
-                using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
+                sql = "select * from Indexes where id_entry = @SelectedId";
+                using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
                 {
-                    cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
-                    using (SQLiteDataReader rdr = cmd.ExecuteReader())
+                    c.Open();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
                     {
-                        while (rdr.Read())
+                        cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
+                        using (SQLiteDataReader rdr = cmd.ExecuteReader())
                         {
-                            //перевести всё из базы в строковые переменные
-                            txtIndexIPS.Text = Convert.ToString(rdr["IPS"]);
-                            txtIndexIPR.Text = Convert.ToString(rdr["IPR"]);
-                            txtIndexYshDiv.Text = Convert.ToString(rdr["YshD"]);
-                            txtIndexT3.Text = Convert.ToString(rdr["T3"]);
-                            txtIndexA1.Text = Convert.ToString(rdr["A1"]);
-                            txtIndexA2.Text = Convert.ToString(rdr["A2"]);
-                            txtIndexA12Div.Text = Convert.ToString(rdr["A12"]);
-                            txtIndexA21Div.Text = Convert.ToString(rdr["A21"]);
-                            txtIndexY30.Text = Convert.ToString(rdr["Y30"]);
-                            txtIndexVDM.Text = Convert.ToString(rdr["VDM"]);
+                            while (rdr.Read())
+                            {
+                                //перевести всё из базы в строковые переменные
+                                txtIndexIPS.Text = Convert.ToString(rdr["IPS"]);
+                                txtIndexIPR.Text = Convert.ToString(rdr["IPR"]);
+                                txtIndexYshDiv.Text = Convert.ToString(rdr["YshD"]);
+                                txtIndexT3.Text = Convert.ToString(rdr["T3"]);
+                                txtIndexA1.Text = Convert.ToString(rdr["A1"]);
+                                txtIndexA2.Text = Convert.ToString(rdr["A2"]);
+                                txtIndexA12Div.Text = Convert.ToString(rdr["A12"]);
+                                txtIndexA21Div.Text = Convert.ToString(rdr["A21"]);
+                                txtIndexY30.Text = Convert.ToString(rdr["Y30"]);
+                                txtIndexVDM.Text = Convert.ToString(rdr["VDM"]);
+                            }
                         }
                     }
+                    c.Close();
                 }
-                c.Close();
-            }
 
-            sql = "select * from Stats where id_entry = @SelectedId";
-            using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
-            {
-                c.Open();
-                using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
+                sql = "select * from Stats where id_entry = @SelectedId";
+                using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
                 {
-                    cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
-                    using (SQLiteDataReader rdr = cmd.ExecuteReader())
+                    c.Open();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
                     {
-                        while (rdr.Read())
+                        cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
+                        using (SQLiteDataReader rdr = cmd.ExecuteReader())
                         {
-                            //перевести всё из базы в строковые переменные
-                            txtMean1.Text = Convert.ToString(rdr["Mean"]);
-                            txtSKVO1.Text = Convert.ToString(rdr["SKVO"]);
-                            txtDisp.Text = Convert.ToString(rdr["Disp"]);
-                            textSKO.Text = Convert.ToString(rdr["SKO"]);
-                            txtMSE1.Text = Convert.ToString(rdr["MSE"]);
-                            txtVar.Text = Convert.ToString(rdr["Vari"]);
+                            while (rdr.Read())
+                            {
+                                //перевести всё из базы в строковые переменные
+                                txtMean1.Text = Convert.ToString(rdr["Mean"]);
+                                txtSKVO1.Text = Convert.ToString(rdr["SKVO"]);
+                                txtDisp.Text = Convert.ToString(rdr["Disp"]);
+                                textSKO.Text = Convert.ToString(rdr["SKO"]);
+                                txtMSE1.Text = Convert.ToString(rdr["MSE"]);
+                                txtVar.Text = Convert.ToString(rdr["Vari"]);
+                            }
                         }
                     }
+                    c.Close();
                 }
-                c.Close();
-            }
 
-            sql = "select * from Addd where id_entry = @SelectedId";
-            using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
-            {
-                c.Open();
-                using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
+                sql = "select * from Addd where id_entry = @SelectedId";
+                using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
                 {
-                    cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
-                    using (SQLiteDataReader rdr = cmd.ExecuteReader())
+                    c.Open();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
                     {
-                        while (rdr.Read())
+                        cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
+                        using (SQLiteDataReader rdr = cmd.ExecuteReader())
                         {
-                            //перевести всё из базы в строковые переменные
-                            TxtMeanErr.Text = Convert.ToString(rdr["MeanErr"]);
-                            TxtSumSkvo.Text = Convert.ToString(rdr["SumKVO"]);
+                            while (rdr.Read())
+                            {
+                                //перевести всё из базы в строковые переменные
+                                TxtMeanErr.Text = Convert.ToString(rdr["MeanErr"]);
+                                TxtSumSkvo.Text = Convert.ToString(rdr["SumKVO"]);
+                            }
                         }
                     }
+                    c.Close();
                 }
-                c.Close();
+
+                chart1.Series[0].Points.Clear();
+                chart1.Series[1].Points.Clear();
+                chart1.Series[2].Points.Clear();
+                chart1.Series[3].Points.Clear();
+                chart2.Series[0].Points.Clear();
+                chart2.Series[1].Points.Clear();
+                //chart1.Series[7].Points.Clear();
+                chart2.Visible = true;
+                for (int i = 0; i < ye.Count; i++)
+                {
+                    //вывод графиков экспериментальных и аппроксимирующих значений функции
+                    chart1.Series[0].Points.AddXY(x[i], y[i]);
+                    chart1.Series[1].Points.AddXY(x[i], ye[i]);
+                    chart1.Series[2].Points.AddXY(x[i], k1[i]);
+                    chart1.Series[3].Points.AddXY(x[i], k2[i]);
+                    chart2.Series[0].Points.AddXY(x[i], Ysh[i]);
+                    chart2.Series[1].Points.AddXY(x[i], Ysh2[i]);
+                }
+
+                //заполнение дата грид вью
+
+                n = x.Count;
+
+                dataGridView1.Rows.Clear();
+                dataGridView1.Refresh();
+
+                dataGridView1.RowCount = n + 1;
+                dataGridView1.ColumnCount = 7;
+                dataGridView1[0, 0].Value = "№";
+                dataGridView1[1, 0].Value = "x";
+                dataGridView1[2, 0].Value = "y";
+                dataGridView1[3, 0].Value = "F(x)";
+                dataGridView1[4, 0].Value = "(Y - F(x)) ^ 2";
+                dataGridView1[5, 0].Value = "F'";
+                dataGridView1[6, 0].Value = "F''";
+
+                //textBox28.Text = Convert.ToString( x.Length);
+                for (int i = 0; i < x.Count; i++)
+                {
+                    //textBox2.Text += ssX + Environment.NewLine;
+                    dataGridView1[0, i + 1].Value = i + 1;
+                    dataGridView1[1, i + 1].Value = Math.Round(x[i], 4);
+                    dataGridView1[2, i + 1].Value = Math.Round(y[i], 4);
+                    dataGridView1[3, i + 1].Value = Math.Round(ye[i], 4);
+                    dataGridView1[4, i + 1].Value = Math.Round(kv[i], 4);
+                    dataGridView1[5, i + 1].Value = Math.Round(Ysh[i], 4);
+                    dataGridView1[6, i + 1].Value = Math.Round(Ysh2[i], 4);
+
+                }
+                txtfortest.Text = n.ToString();
+
+                dataGridView4.Rows.Clear();
+                dataGridView4.Refresh();
+
+                dataGridView4.RowCount = ye.Count + 1;
+                dataGridView4.ColumnCount = 4;
+                dataGridView4[0, 0].Value = "№";
+                dataGridView4[1, 0].Value = "F(x)";
+                dataGridView4[2, 0].Value = "M-F(x)";
+                dataGridView4[3, 0].Value = "(M-F(x))^2";
+
+
+                for (int i = 0; i < ye.Count; i++)
+                {
+                    dataGridView4.Rows[i + 1].Cells[0].Value = i + 1;
+                    dataGridView4.Rows[i + 1].Cells[1].Value = Math.Round(ye[i], 4);
+                    dataGridView4.Rows[i + 1].Cells[2].Value = Math.Round(Convert.ToDouble(dataGridView4.Rows[i + 1].Cells[1].Value) - Convert.ToDouble(txtMean1.Text), 4);
+                    dataGridView4.Rows[i + 1].Cells[3].Value = Math.Round(Math.Pow((Convert.ToDouble(dataGridView4.Rows[i + 1].Cells[1].Value) - Convert.ToDouble(txtMean1.Text)), 2), 4);
+                }
+                Anchorr1 = false;
+                Anchorr = true;
+                Sel1 = x;
+                Sel2 = y;
+
+                //активировать главную вкладку
+                BtnCalc.Enabled = true;
+                tabControl1.SelectTab(TbP1);
+                btnStat.Enabled = true;
+                BtnStatCalc.Enabled = true;
+                button5.Enabled = false;
+                button6.Enabled = false;
             }
-
-            //заполнение дата грид вью
-
-            n = x.Count;
-
-            dataGridView1.Rows.Clear();
-            dataGridView1.Refresh();
-
-            dataGridView1.RowCount = n + 1;
-            dataGridView1.ColumnCount = 7;
-            dataGridView1[0, 0].Value = "№";
-            dataGridView1[1, 0].Value = "x";
-            dataGridView1[2, 0].Value = "y";
-            dataGridView1[3, 0].Value = "F(x)";
-            dataGridView1[4, 0].Value = "(Y - F(x)) ^ 2";
-            dataGridView1[5, 0].Value = "F'";
-            dataGridView1[6, 0].Value = "F''";
-
-            //textBox28.Text = Convert.ToString( x.Length);
-            for (int i = 0; i < x.Count; i++)
+            catch (Exception ex)
             {
-                //textBox2.Text += ssX + Environment.NewLine;
-                dataGridView1[0, i + 1].Value = i + 1;
-                dataGridView1[1, i + 1].Value = Math.Round(x[i], 4);
-                dataGridView1[2, i + 1].Value = Math.Round(y[i], 4);
-                dataGridView1[3, i + 1].Value = Math.Round(ye[i], 4);
-                dataGridView1[4, i + 1].Value = Math.Round(kv[i], 4);
-                dataGridView1[5, i + 1].Value = Math.Round(Ysh[i], 4);
-                dataGridView1[6, i + 1].Value = Math.Round(Ysh2[i], 4);
-
+                MessageBox.Show("Невозможно загрузить запись из базы данных." + Environment.NewLine +
+                    "Либо она не выделена в таблице, либо произошла иная ошибка" + Environment.NewLine +
+                    ex.Message);
             }
-            txtfortest.Text = n.ToString();
-
-            dataGridView4.Rows.Clear();
-            dataGridView4.Refresh();
-
-            dataGridView4.RowCount = ye.Count +1;
-            dataGridView4.ColumnCount = 4;
-            dataGridView4[0, 0].Value = "№";
-            dataGridView4[1, 0].Value = "F(x)";
-            dataGridView4[2, 0].Value = "M-F(x)";
-            dataGridView4[3, 0].Value = "(M-F(x))^2";
-
-
-            for (int i = 0; i < ye.Count; i++)
-            {
-                dataGridView4.Rows[i + 1].Cells[0].Value = i + 1;
-                dataGridView4.Rows[i + 1].Cells[1].Value = Math.Round(ye[i], 4);
-                dataGridView4.Rows[i + 1].Cells[2].Value = Math.Round(Convert.ToDouble(dataGridView4.Rows[i + 1].Cells[1].Value) - Convert.ToDouble(txtMean1.Text), 4);
-                dataGridView4.Rows[i + 1].Cells[3].Value = Math.Round(Math.Pow((Convert.ToDouble(dataGridView4.Rows[i + 1].Cells[1].Value) - Convert.ToDouble(txtMean1.Text)), 2), 4);
-            }
-
-
-            //активировать главную вкладку
-            tabControl1.SelectTab(TbP1);
         }
 
         public void chart1_MouseDown(object sender, MouseEventArgs e)
         {
             try
             {
-                if (Anchorr == true)
+                if (Anchorr1 == true)
                 {
-                    //double datapoint = Convert.ToDouble(chart1.ChartAreas[0].AxisX.GetPosition(50));
-                    double ClickPos = Convert.ToDouble(chart1.ChartAreas[0].AxisX.PixelPositionToValue(e.X));
-
-                    if (ClickPos < Col1.Min()) ClickPos = Col1.Min();
-                    else if (ClickPos > Col1.Max()) ClickPos = Col1.Max();
-
-                    SelectionClicks++;
-                    button5.Enabled = true;
-                    if (SelectionClicks % 2 == 1) SelectionBorder1 = ClickPos;
-                    else SelectionBorder2 = ClickPos;
-                    //label3.Text = Convert.ToString(chart1.ChartAreas[0].AxisX.PixelPositionToValue(e.Y));
-
-                    if (SelectionBorder1 > SelectionBorder2)
+                    if (Anchorr == true)
                     {
-                        SelectionBorder1 = SelectionBorder1 - SelectionBorder2;
-                        SelectionBorder2 += SelectionBorder1;
-                        SelectionBorder1 = SelectionBorder2 - SelectionBorder1;
-                    }
+                        //double datapoint = Convert.ToDouble(chart1.ChartAreas[0].AxisX.GetPosition(50));
+                        double ClickPos = Convert.ToDouble(chart1.ChartAreas[0].AxisX.PixelPositionToValue(e.X));
 
-                    if (SelectionBorder1 * SelectionBorder2 == 0)
+                        if (ClickPos < Col1.Min()) ClickPos = Col1.Min();
+                        else if (ClickPos > Col1.Max()) ClickPos = Col1.Max();
+
+                        SelectionClicks++;
                         button5.Enabled = true;
+                        if (SelectionClicks % 2 == 1) SelectionBorder1 = ClickPos;
+                        else SelectionBorder2 = ClickPos;
+                        //label3.Text = Convert.ToString(chart1.ChartAreas[0].AxisX.PixelPositionToValue(e.Y));
 
-                    //ShowSelectionBorder(SelectionBorder1, SelectionBorder2);
+                        if (SelectionBorder1 > SelectionBorder2)
+                        {
+                            SelectionBorder1 = SelectionBorder1 - SelectionBorder2;
+                            SelectionBorder2 += SelectionBorder1;
+                            SelectionBorder1 = SelectionBorder2 - SelectionBorder1;
+                        }
 
-                    label1.Text = "ЛЕВАЯ ГРАНИЦА: " + Convert.ToString(Math.Round(SelectionBorder1, 3)) + ", ПРАВАЯ ГРАНИЦА: " + Convert.ToString(Math.Round(SelectionBorder2, 3));
-                }
-                else if(Anchorr == false)
-                {
-                    //double datapoint = Convert.ToDouble(chart1.ChartAreas[0].AxisX.GetPosition(50));
-                    double ClickPos = Convert.ToDouble(chart1.ChartAreas[0].AxisX.PixelPositionToValue(e.X));
+                        if (SelectionBorder1 * SelectionBorder2 == 0)
+                            button5.Enabled = true;
 
-                    if (ClickPos < Col1.Min()) ClickPos = Col1.Min();
-                    else if (ClickPos > Col1.Max()) ClickPos = Col1.Max();
+                        //ShowSelectionBorder(SelectionBorder1, SelectionBorder2);
 
-                    SelectionClicks++;
-                    //button5.Enabled = true;
-                    if (SelectionClicks % 2 == 1) SelectionBorder1 = ClickPos;
-                    else SelectionBorder2 = ClickPos;
-                    //label3.Text = Convert.ToString(chart1.ChartAreas[0].AxisX.PixelPositionToValue(e.Y));
-
-                    if (SelectionBorder1 > SelectionBorder2)
-                    {
-                        SelectionBorder1 = SelectionBorder1 - SelectionBorder2;
-                        SelectionBorder2 += SelectionBorder1;
-                        SelectionBorder1 = SelectionBorder2 - SelectionBorder1;
+                        label1.Text = "ЛЕВАЯ ГРАНИЦА: " + Convert.ToString(Math.Round(SelectionBorder1, 3)) + ", ПРАВАЯ ГРАНИЦА: " + Convert.ToString(Math.Round(SelectionBorder2, 3));
                     }
+                    else if (Anchorr == false)
+                    {
+                        //double datapoint = Convert.ToDouble(chart1.ChartAreas[0].AxisX.GetPosition(50));
+                        double ClickPos = Convert.ToDouble(chart1.ChartAreas[0].AxisX.PixelPositionToValue(e.X));
 
-                    //if (SelectionBorder1 * SelectionBorder2 == 0)
+                        if (ClickPos < Col1.Min()) ClickPos = Col1.Min();
+                        else if (ClickPos > Col1.Max()) ClickPos = Col1.Max();
+
+                        SelectionClicks++;
+                        //button5.Enabled = true;
+                        if (SelectionClicks % 2 == 1) SelectionBorder1 = ClickPos;
+                        else SelectionBorder2 = ClickPos;
+                        //label3.Text = Convert.ToString(chart1.ChartAreas[0].AxisX.PixelPositionToValue(e.Y));
+
+                        if (SelectionBorder1 > SelectionBorder2)
+                        {
+                            SelectionBorder1 = SelectionBorder1 - SelectionBorder2;
+                            SelectionBorder2 += SelectionBorder1;
+                            SelectionBorder1 = SelectionBorder2 - SelectionBorder1;
+                        }
+
+                        //if (SelectionBorder1 * SelectionBorder2 == 0)
                         //button5.Enabled = true;
 
-                    //ShowSelectionBorder(SelectionBorder1, SelectionBorder2);
+                        //ShowSelectionBorder(SelectionBorder1, SelectionBorder2);
 
-                    label1.Text = "ЛЕВАЯ ГРАНИЦА: " + Convert.ToString(Math.Round(SelectionBorder1, 3)) + ", ПРАВАЯ ГРАНИЦА: " + Convert.ToString(Math.Round(SelectionBorder2, 3));
+                        label1.Text = "ЛЕВАЯ ГРАНИЦА: " + Convert.ToString(Math.Round(SelectionBorder1, 3)) + ", ПРАВАЯ ГРАНИЦА: " + Convert.ToString(Math.Round(SelectionBorder2, 3));
+                    }
                 }
             }
-            catch
+            catch(Exception ex)
             {
                 xlApp.Quit();
-                MessageBox.Show("Убедитесь, что график отображается и границы заданы правильно");
+                MessageBox.Show("Убедитесь, что график отображается и границы заданы правильно." +
+                    Environment.NewLine + "Невозможно увеличить или задать границы графика в случае, " +
+                    "если данные загружены из базы данных." +Environment.NewLine + ex);
             }
         }
 
@@ -1626,7 +1671,7 @@ namespace ExcelTest
             chart2.Visible = true;
             for (int i = 0; i < ye.Count; i++)
             {
-                dataGridView1.Rows[i + 1].Cells[0].Value = i;
+                dataGridView1.Rows[i + 1].Cells[0].Value = i+1;
                 dataGridView1[1, i + 1].Value = Math.Round(x[i], 4);
                 dataGridView1[2, i + 1].Value = Math.Round(y[i], 4);
                 dataGridView1[3, i + 1].Value = Math.Round(ye[i], 4);
@@ -1791,7 +1836,8 @@ namespace ExcelTest
             txtIndexVDM.Text = Math.Round(mafx, 4).ToString();
 
             btnStat.Enabled = true;
-            BtnCalc.Enabled = true;
+            BtnStatCalc.Enabled = true;
+            button1.Enabled = true;
             //}
             /*catch (Exception ex)
             {
@@ -1922,7 +1968,7 @@ namespace ExcelTest
 
             SKO = Math.Sqrt( sumSKVO1 / (n - 1));
 
-            disp = Math.Sqrt(SKO);
+            disp = Math.Pow(SKO, 2);
 
             
 
@@ -1939,60 +1985,90 @@ namespace ExcelTest
             tb1c = dataGridView4.Rows.Count - 1;
             tb2c = dataGridView2.Rows.Count - 1;
 
+            button8.Enabled = true;
+
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
-            sumMean1 = Convert.ToDouble(txtMean1.Text);
-            sumMean2 = Convert.ToDouble(txtMean2.Text);
-            MSE1 = Convert.ToDouble(txtMSE1.Text);
-            MSE2 = Convert.ToDouble(txtMSE2.Text);
-            Student = (sumMean1 - sumMean2) / Math.Sqrt(Math.Pow((MSE1), 2) + Math.Pow((MSE2), 2));
-            txtStudent.Text = Math.Round(Student, 4).ToString();
-            umnozh = 0;
-            umnozh2 = 0;
-            tb1c = dataGridView2.Rows.Count - 1;
-            tb2c = dataGridView4.Rows.Count - 1;
-
-            sumSKVO1 = Convert.ToDouble(txtSKVO1.Text);
-            sumSKVO2 = Convert.ToDouble(txtSKVO2.Text);
-
-            if (tb1c >= tb2c)
+            try
             {
-                for (int i = 0; i < tb2c; i++)
+                sumMean1 = Convert.ToDouble(txtMean1.Text);
+                sumMean2 = Convert.ToDouble(txtMean2.Text);
+                MSE1 = Convert.ToDouble(txtMSE1.Text);
+                MSE2 = Convert.ToDouble(txtMSE2.Text);
+                Student = (sumMean1 - sumMean2) / Math.Sqrt(Math.Pow((MSE1), 2) + Math.Pow((MSE2), 2));
+                txtStudent.Text = Math.Round(Student, 4).ToString();
+                umnozh = 0;
+                umnozh2 = 0;
+                tb1c = dataGridView2.Rows.Count - 1;
+                tb2c = dataGridView4.Rows.Count - 1;
+
+                sumSKVO1 = Convert.ToDouble(txtSKVO1.Text);
+                sumSKVO2 = Convert.ToDouble(txtSKVO2.Text);
+
+                if (tb1c >= tb2c)
                 {
-                    umnozh += Convert.ToDouble(dataGridView2.Rows[i + 1].Cells[2].Value) * Convert.ToDouble(dataGridView4.Rows[i + 1].Cells[2].Value);
+                    for (int i = 0; i < tb2c; i++)
+                    {
+                        umnozh += Convert.ToDouble(dataGridView2.Rows[i + 1].Cells[2].Value) * Convert.ToDouble(dataGridView4.Rows[i + 1].Cells[2].Value);
+                    }
+                    umnozh2 = Math.Sqrt(Math.Pow((sumSKVO1), 2) * Math.Pow((sumSKVO2), 2));
+                    Pirson = umnozh / umnozh2;
+                    txtPirson.Text = Math.Round(Pirson, 4).ToString();
                 }
-                umnozh2 = Math.Sqrt(Math.Pow((sumSKVO1), 2) * Math.Pow((sumSKVO2), 2));
-                Pirson = umnozh / umnozh2;
-                txtPirson.Text = Math.Round(Pirson, 4).ToString();
+                else
+                {
+                    for (int i = 0; i < tb1c; i++)
+                    {
+                        umnozh += Convert.ToDouble(dataGridView2.Rows[i + 1].Cells[2].Value) * Convert.ToDouble(dataGridView4.Rows[i + 1].Cells[2].Value);
+                    }
+                    umnozh2 = Math.Sqrt(Math.Pow((sumSKVO1), 2) * Math.Pow((sumSKVO2), 2));
+                    Pirson = umnozh / umnozh2;
+                    txtPirson.Text = Math.Round(Pirson, 4).ToString();
+                }
+                button1.Enabled = true;
             }
-            else
+            catch (Exception ex)
             {
-                for (int i = 0; i < tb1c; i++)
-                {
-                    umnozh += Convert.ToDouble(dataGridView2.Rows[i + 1].Cells[2].Value) * Convert.ToDouble(dataGridView4.Rows[i + 1].Cells[2].Value);
-                }
-                umnozh2 = Math.Sqrt(Math.Pow((sumSKVO1), 2) * Math.Pow((sumSKVO2), 2));
-                Pirson = umnozh / umnozh2;
-                txtPirson.Text = Math.Round(Pirson, 4).ToString();
+                txtMean1.BackColor = Color.Yellow;
+                txtMean2.BackColor = Color.Yellow;
+                txtMSE1.BackColor = Color.Yellow;
+                txtMSE2.BackColor = Color.Yellow;
+                txtSKVO1.BackColor = Color.Yellow;
+                txtSKVO2.BackColor = Color.Yellow;
+                MessageBox.Show("Помимо основной таблицы нужно загрузить дополнительную таблицу из базы данных для расчёта критериев" + Environment.NewLine +
+                    ex.Message);
+                txtMean1.BackColor = Color.WhiteSmoke;
+                txtMean2.BackColor = Color.WhiteSmoke;
+                txtMSE1.BackColor = Color.WhiteSmoke;
+                txtMSE2.BackColor = Color.WhiteSmoke;
+                txtSKVO1.BackColor = Color.WhiteSmoke;
+                txtSKVO2.BackColor = Color.WhiteSmoke;
             }
         }
 
         private void chart1_MouseMove(object sender, MouseEventArgs e)
         {
-            Point mousePoint = new Point(e.X, e.Y);
+            try
+            {
+                Point mousePoint = new Point(e.X, e.Y);
 
-            var XPixel = chart1.ChartAreas[0].AxisX.PixelPositionToValue(e.X);
-            var YPixel = chart1.ChartAreas[0].AxisY.PixelPositionToValue(e.Y);
+                var XPixel = chart1.ChartAreas[0].AxisX.PixelPositionToValue(e.X);
+                var YPixel = chart1.ChartAreas[0].AxisY.PixelPositionToValue(e.Y);
 
 
-            chart1.ChartAreas[0].CursorX.Interval = 0;
-            chart1.ChartAreas[0].CursorY.Interval = 0;
+                chart1.ChartAreas[0].CursorX.Interval = 0;
+                chart1.ChartAreas[0].CursorY.Interval = 0;
 
-            chart1.ChartAreas[0].CursorX.SetCursorPixelPosition(mousePoint, true);
-            chart1.ChartAreas[0].CursorY.SetCursorPixelPosition(mousePoint, true);
-            toolTip1.SetToolTip(chart1, "x: " + XPixel.ToString("F3") + " y: " + YPixel.ToString("F3"));
+                chart1.ChartAreas[0].CursorX.SetCursorPixelPosition(mousePoint, true);
+                chart1.ChartAreas[0].CursorY.SetCursorPixelPosition(mousePoint, true);
+                toolTip1.SetToolTip(chart1, "x: " + XPixel.ToString("F3") + " y: " + YPixel.ToString("F3"));
+            }
+            catch (Exception ex)
+            {
+                
+            }
         }
 
         private void chart2_MouseMove(object sender, MouseEventArgs e)
@@ -2018,78 +2094,218 @@ namespace ExcelTest
 
         private void button9_Click(object sender, EventArgs e)
         {
-            int SelectedId = Convert.ToInt32(dataGridView3[0, dataGridView3.CurrentCell.RowIndex].Value);
-            ye2.Clear();
-            string sql = "select * from Source where id_entry = @SelectedId";
-            using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
+            try
             {
-                c.Open();
-                using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
+                int SelectedId = Convert.ToInt32(dataGridView3[0, dataGridView3.CurrentCell.RowIndex].Value);
+                ye2.Clear();
+                string sql = "select * from Source where id_entry = @SelectedId";
+                using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
                 {
-                    cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
-                    using (SQLiteDataReader rdr = cmd.ExecuteReader())
+                    c.Open();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
                     {
-                        while (rdr.Read())
+                        cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
+                        using (SQLiteDataReader rdr = cmd.ExecuteReader())
                         {
-                            ye2.Add(Convert.ToDouble(rdr["ye"], CultureInfo.InvariantCulture));
+                            while (rdr.Read())
+                            {
+                                ye2.Add(Convert.ToDouble(rdr["ye"], CultureInfo.InvariantCulture));
+                            }
                         }
                     }
+                    c.Close();
                 }
-                c.Close();
-            }
 
-            sql = "select * from Stats where id_entry = @SelectedId";
-            using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
-            {
-                c.Open();
-                using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
+                sql = "select * from Stats where id_entry = @SelectedId";
+                using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
                 {
-                    cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
-                    using (SQLiteDataReader rdr = cmd.ExecuteReader())
+                    c.Open();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
                     {
-                        while (rdr.Read())
+                        cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
+                        using (SQLiteDataReader rdr = cmd.ExecuteReader())
                         {
-                            //перевести всё из базы в строковые переменные
-                            txtMean2.Text = Convert.ToString(rdr["Mean"]);
-                            txtSKVO2.Text = Convert.ToString(rdr["SKVO"]);
-                            txtMSE2.Text = Convert.ToString(rdr["MSE"]);
+                            while (rdr.Read())
+                            {
+                                //перевести всё из базы в строковые переменные
+                                txtMean2.Text = Convert.ToString(rdr["Mean"]);
+                                txtSKVO2.Text = Convert.ToString(rdr["SKVO"]);
+                                txtMSE2.Text = Convert.ToString(rdr["MSE"]);
+                            }
                         }
                     }
+                    c.Close();
                 }
-                c.Close();
+                dataGridView2.Rows.Clear();
+                dataGridView2.Refresh();
+
+                dataGridView2.RowCount = ye2.Count + 1;
+                dataGridView2.ColumnCount = 4;
+                dataGridView2[0, 0].Value = "№";
+                dataGridView2[1, 0].Value = "F(x)";
+                dataGridView2[2, 0].Value = "M-F(x)";
+                dataGridView2[3, 0].Value = "(M-F(x))^2";
+
+
+                for (int i = 0; i < ye2.Count; i++)
+                {
+                    dataGridView2.Rows[i + 1].Cells[0].Value = i + 1;
+                    dataGridView2.Rows[i + 1].Cells[1].Value = ye2[i].ToString("F4");
+                    dataGridView2.Rows[i + 1].Cells[2].Value = Convert.ToDouble(dataGridView2.Rows[i + 1].Cells[1].Value) - Convert.ToDouble(txtMean1.Text);
+                    dataGridView2.Rows[i + 1].Cells[3].Value = Math.Pow((Convert.ToDouble(dataGridView2.Rows[i + 1].Cells[1].Value) - Convert.ToDouble(txtMean1.Text)), 2);
+                }
+
+                button8.Enabled = true;
+                //активировать главную вкладку
+                tabControl1.SelectTab(TbP5);
             }
-            dataGridView2.Rows.Clear();
-            dataGridView2.Refresh();
-
-            dataGridView2.RowCount = ye2.Count + 1;
-            dataGridView2.ColumnCount = 4;
-            dataGridView2[0, 0].Value = "№";
-            dataGridView2[1, 0].Value = "F(x)";
-            dataGridView2[2, 0].Value = "M-F(x)";
-            dataGridView2[3, 0].Value = "(M-F(x))^2";
-
-
-            for (int i = 0; i < ye2.Count; i++)
+            catch (Exception ex)
             {
-                dataGridView2.Rows[i + 1].Cells[0].Value = i + 1;
-                dataGridView2.Rows[i + 1].Cells[1].Value = ye2[i].ToString("F4");
-                dataGridView2.Rows[i + 1].Cells[2].Value = Convert.ToDouble(dataGridView2.Rows[i + 1].Cells[1].Value) - Convert.ToDouble(txtMean1.Text);
-                dataGridView2.Rows[i + 1].Cells[3].Value = Math.Pow((Convert.ToDouble(dataGridView2.Rows[i + 1].Cells[1].Value) - Convert.ToDouble(txtMean1.Text)), 2);
+                MessageBox.Show("Сперва нужно загрузить основную таблицу" + Environment.NewLine +
+                    ex.Message);
             }
-
-
-            //активировать главную вкладку
-            tabControl1.SelectTab(TbP5);
         }
 
         private void button10_Click(object sender, EventArgs e)
         {
+            try
+            {
+                int SelectedId = Convert.ToInt32(dataGridView3[0, dataGridView3.CurrentCell.RowIndex].Value);
+                string sql = "delete from Entry where id_entry = @SelectedId";
+                using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
+                {
+                    c.Open();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
+                    {
+                        cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
+                        cmd.ExecuteReader();
+                    }
+                    c.Close();
+                }
 
+                sql = "delete from Source where id_entry = @SelectedId";
+                using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
+                {
+                    c.Open();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
+                    {
+                        cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
+                        cmd.ExecuteReader();
+                    }
+                    c.Close();
+                }
+
+                sql = "delete from InitApp where id_entry = @SelectedId";
+                using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
+                {
+                    c.Open();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
+                    {
+                        cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
+                        cmd.ExecuteReader();
+                    }
+                    c.Close();
+                }
+
+                sql = "delete from Koef where id_entry = @SelectedId";
+                using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
+                {
+                    c.Open();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
+                    {
+                        cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
+                        cmd.ExecuteReader();
+                    }
+                    c.Close();
+                }
+
+                sql = "delete from AppEx where id_entry = @SelectedId";
+                using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
+                {
+                    c.Open();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
+                    {
+                        cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
+                        cmd.ExecuteReader();
+                    }
+                    c.Close();
+                }
+
+                sql = "delete from YshEx where id_entry = @SelectedId";
+                using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
+                {
+                    c.Open();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
+                    {
+                        cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
+                        cmd.ExecuteReader();
+                    }
+                    c.Close();
+                }
+
+                sql = "delete from Ysh2Ex where id_entry = @SelectedId";
+                using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
+                {
+                    c.Open();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
+                    {
+                        cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
+                        cmd.ExecuteReader();
+                    }
+                    c.Close();
+                }
+
+                sql = "delete from Indexes where id_entry = @SelectedId";
+                using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
+                {
+                    c.Open();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
+                    {
+                        cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
+                        cmd.ExecuteReader();
+                    }
+                    c.Close();
+                }
+
+                sql = "delete from Stats where id_entry = @SelectedId";
+                using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
+                {
+                    c.Open();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
+                    {
+                        cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
+                        cmd.ExecuteReader();
+                    }
+                    c.Close();
+                }
+
+                sql = "delete from Addd where id_entry = @SelectedId";
+                using (SQLiteConnection c = new SQLiteConnection(ConnectionString))
+                {
+                    c.Open();
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, c))
+                    {
+                        cmd.Parameters.AddWithValue("@SelectedId", SelectedId);
+                        cmd.ExecuteReader();
+                    }
+                    c.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Невозможно удалить запись из базы данных." + Environment.NewLine +
+                    "Либо она не выделена в таблице, либо произошла иная ошибка" + Environment.NewLine +
+                    ex.Message);
+            }
+            DBLoad();
+            
         }
 
         private void btnStat_Click(object sender, EventArgs e)
         {
-
+            tabControl1.SelectTab(TbP5);
+            BtnStatCalc.Enabled = true;
+            button1.Enabled = true;
         }
 
         private void btnLoadST_Click(object sender, EventArgs e)
@@ -2100,10 +2316,19 @@ namespace ExcelTest
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Pirson = Convert.ToDouble(txtPirson.Text);
-            n = dataGridView2.Rows.Count - 1;
-            Student = (Pirson * Math.Sqrt(n - 2)) / Math.Sqrt(1 - Math.Pow((Pirson), 2));
-            txtStudent.Text = Math.Round(Student, 4).ToString();
+            try
+            {
+
+                Pirson = Convert.ToDouble(txtPirson.Text);
+                n = dataGridView2.Rows.Count - 1;
+                Student = (Pirson * Math.Sqrt(n - 2)) / Math.Sqrt(1 - Math.Pow((Pirson), 2));
+                txtStudent.Text = Math.Round(Student, 4).ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Значение для критерия Пирсона отсутствует" + Environment.NewLine +
+                    ex.Message);
+            }
         }
 
         public void scan(int nom)  //оптимизация одномерной функции
@@ -2123,6 +2348,11 @@ namespace ExcelTest
                 z = z1;
             }
             while (a == false && d1 > eps1);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            DBLoad();
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
@@ -2303,7 +2533,9 @@ namespace ExcelTest
                     chart1.ChartAreas[0].AxisY.ScaleView.Zoom(posYStart, posYFinish);
                 }
             }
-            catch { }
+            catch
+            {
+            }
         }
 
         private void chart2_MouseWheel(object sender, MouseEventArgs e)

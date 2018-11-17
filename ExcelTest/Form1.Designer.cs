@@ -29,17 +29,17 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea13 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend13 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series37 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series38 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series39 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series40 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea14 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend14 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series41 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series42 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.BtnLoadFromFile = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -149,6 +149,13 @@
             this.textBox28 = new System.Windows.Forms.TextBox();
             this.label29 = new System.Windows.Forms.Label();
             this.TbP3 = new System.Windows.Forms.TabPage();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
@@ -158,11 +165,13 @@
             this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.TbP4 = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.button2 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.TbP5 = new System.Windows.Forms.TabPage();
+            this.label57 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.txtMSE2 = new System.Windows.Forms.TextBox();
             this.label46 = new System.Windows.Forms.Label();
@@ -191,13 +200,6 @@
             this.label54 = new System.Windows.Forms.Label();
             this.label55 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.TbP1.SuspendLayout();
@@ -215,6 +217,7 @@
             this.groupBox8.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.TbP3.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -231,7 +234,6 @@
             this.TbP5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
-            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -256,10 +258,6 @@
             this.BtnLoadFromFile.Text = "Загрузить из файла";
             this.BtnLoadFromFile.UseVisualStyleBackColor = true;
             this.BtnLoadFromFile.Click += new System.EventHandler(this.BtnLoadfromFile_Click);
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // txtfortest
             // 
@@ -404,7 +402,7 @@
             this.groupBox1.Size = new System.Drawing.Size(640, 64);
             this.groupBox1.TabIndex = 36;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Коэффициенты";
+            this.groupBox1.Text = "Расчётные коэффициенты";
             // 
             // txtC1kof
             // 
@@ -971,7 +969,7 @@
             this.groupBox3.Size = new System.Drawing.Size(600, 64);
             this.groupBox3.TabIndex = 52;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Максимумы аппроксимирующей функции";
+            this.groupBox3.Text = "Максимумы моделируемой функции (расчётной функции)";
             // 
             // txty1Y2m
             // 
@@ -1128,11 +1126,11 @@
             // label41
             // 
             this.label41.AutoSize = true;
-            this.label41.Location = new System.Drawing.Point(454, 55);
+            this.label41.Location = new System.Drawing.Point(457, 61);
             this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(20, 26);
+            this.label41.Size = new System.Drawing.Size(38, 13);
             this.label41.TabIndex = 46;
-            this.label41.Text = "A2\r\nA1";
+            this.label41.Text = "A2/A1";
             // 
             // txtIndexA1
             // 
@@ -1170,11 +1168,11 @@
             // label39
             // 
             this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(295, 55);
+            this.label39.Location = new System.Drawing.Point(295, 61);
             this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(20, 26);
+            this.label39.Size = new System.Drawing.Size(38, 13);
             this.label39.TabIndex = 42;
-            this.label39.Text = "A1\r\nA2";
+            this.label39.Text = "A1/A2";
             // 
             // label40
             // 
@@ -1205,7 +1203,7 @@
             // label32
             // 
             this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(454, 27);
+            this.label32.Location = new System.Drawing.Point(295, 31);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(32, 13);
             this.label32.TabIndex = 17;
@@ -1221,7 +1219,7 @@
             // 
             // txtIndexYshDiv
             // 
-            this.txtIndexYshDiv.Location = new System.Drawing.Point(342, 24);
+            this.txtIndexYshDiv.Location = new System.Drawing.Point(501, 28);
             this.txtIndexYshDiv.Name = "txtIndexYshDiv";
             this.txtIndexYshDiv.ReadOnly = true;
             this.txtIndexYshDiv.Size = new System.Drawing.Size(80, 20);
@@ -1229,7 +1227,7 @@
             // 
             // txtIndexT3
             // 
-            this.txtIndexT3.Location = new System.Drawing.Point(501, 24);
+            this.txtIndexT3.Location = new System.Drawing.Point(342, 28);
             this.txtIndexT3.Name = "txtIndexT3";
             this.txtIndexT3.ReadOnly = true;
             this.txtIndexT3.Size = new System.Drawing.Size(80, 20);
@@ -1238,11 +1236,11 @@
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(295, 21);
+            this.label33.Location = new System.Drawing.Point(430, 35);
             this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(35, 26);
+            this.label33.Size = new System.Drawing.Size(65, 13);
             this.label33.TabIndex = 16;
-            this.label33.Text = "Y\'min\r\nY\'max";
+            this.label33.Text = "Y\'min/Y\'max";
             // 
             // label34
             // 
@@ -1265,6 +1263,7 @@
             this.groupBox6.TabIndex = 46;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Экстрасистолическое сокращение";
+            this.groupBox6.Visible = false;
             // 
             // label30
             // 
@@ -1309,6 +1308,87 @@
             this.TbP3.TabIndex = 2;
             this.TbP3.Text = "Графики";
             this.TbP3.UseVisualStyleBackColor = true;
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButton1,
+            this.toolStripButton4,
+            this.toolStripButton5,
+            this.toolStripButton2,
+            this.toolStripButton3,
+            this.toolStripButton6});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 44);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(906, 25);
+            this.toolStrip1.TabIndex = 37;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton1.Text = "toolStripButton1";
+            this.toolStripButton1.ToolTipText = "Экспериментальные значения функции";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
+            // toolStripButton4
+            // 
+            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
+            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton4.Name = "toolStripButton4";
+            this.toolStripButton4.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton4.Text = "toolStripButton4";
+            this.toolStripButton4.ToolTipText = "Расчётные значения функции";
+            this.toolStripButton4.Click += new System.EventHandler(this.toolStripButton4_Click);
+            // 
+            // toolStripButton5
+            // 
+            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
+            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton5.Name = "toolStripButton5";
+            this.toolStripButton5.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton5.Text = "toolStripButton5";
+            this.toolStripButton5.ToolTipText = "Первая компонента";
+            this.toolStripButton5.Click += new System.EventHandler(this.toolStripButton5_Click);
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton2.Text = "toolStripButton2";
+            this.toolStripButton2.ToolTipText = "Вторая компонента";
+            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
+            // 
+            // toolStripButton3
+            // 
+            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton3.Text = "toolStripButton3";
+            this.toolStripButton3.ToolTipText = "Первая производная";
+            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
+            // 
+            // toolStripButton6
+            // 
+            this.toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton6.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton6.Image")));
+            this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton6.Name = "toolStripButton6";
+            this.toolStripButton6.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton6.Text = "toolStripButton6";
+            this.toolStripButton6.ToolTipText = "Вторая производная";
+            this.toolStripButton6.Click += new System.EventHandler(this.toolStripButton6_Click);
             // 
             // panel1
             // 
@@ -1379,41 +1459,41 @@
             // 
             // chart1
             // 
-            chartArea13.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea13);
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
             this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend13.Name = "Legend1";
-            this.chart1.Legends.Add(legend13);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(0, 0);
             this.chart1.Name = "chart1";
-            series37.BorderWidth = 3;
-            series37.ChartArea = "ChartArea1";
-            series37.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series37.Color = System.Drawing.Color.Black;
-            series37.Legend = "Legend1";
-            series37.Name = "Экспериментальные\\nзначения функции";
-            series38.BorderWidth = 3;
-            series38.ChartArea = "ChartArea1";
-            series38.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series38.Color = System.Drawing.Color.Purple;
-            series38.Legend = "Legend1";
-            series38.Name = "Расчётные\\nзначения функции";
-            series39.BorderWidth = 3;
-            series39.ChartArea = "ChartArea1";
-            series39.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series39.Color = System.Drawing.Color.Blue;
-            series39.Legend = "Legend1";
-            series39.Name = "Первая \\nкомпонента";
-            series40.BorderWidth = 3;
-            series40.ChartArea = "ChartArea1";
-            series40.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series40.Color = System.Drawing.Color.Red;
-            series40.Legend = "Legend1";
-            series40.Name = "Вторая \\nкомпонента";
-            this.chart1.Series.Add(series37);
-            this.chart1.Series.Add(series38);
-            this.chart1.Series.Add(series39);
-            this.chart1.Series.Add(series40);
+            series1.BorderWidth = 3;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Color = System.Drawing.Color.Black;
+            series1.Legend = "Legend1";
+            series1.Name = "Экспериментальные\\nзначения функции";
+            series2.BorderWidth = 3;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Color = System.Drawing.Color.Purple;
+            series2.Legend = "Legend1";
+            series2.Name = "Расчётные\\nзначения функции";
+            series3.BorderWidth = 3;
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Color = System.Drawing.Color.Blue;
+            series3.Legend = "Legend1";
+            series3.Name = "Первая \\nкомпонента";
+            series4.BorderWidth = 3;
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series4.Color = System.Drawing.Color.Red;
+            series4.Legend = "Legend1";
+            series4.Name = "Вторая \\nкомпонента";
+            this.chart1.Series.Add(series1);
+            this.chart1.Series.Add(series2);
+            this.chart1.Series.Add(series3);
+            this.chart1.Series.Add(series4);
             this.chart1.Size = new System.Drawing.Size(896, 232);
             this.chart1.TabIndex = 30;
             this.chart1.Text = "chart1";
@@ -1423,27 +1503,27 @@
             // 
             // chart2
             // 
-            chartArea14.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea14);
+            chartArea2.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea2);
             this.chart2.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend14.Name = "Legend1";
-            this.chart2.Legends.Add(legend14);
+            legend2.Name = "Legend1";
+            this.chart2.Legends.Add(legend2);
             this.chart2.Location = new System.Drawing.Point(0, 0);
             this.chart2.Name = "chart2";
-            series41.BorderWidth = 3;
-            series41.ChartArea = "ChartArea1";
-            series41.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series41.Color = System.Drawing.Color.Purple;
-            series41.Legend = "Legend1";
-            series41.Name = "Первая\\nпроизводная";
-            series42.BorderWidth = 3;
-            series42.ChartArea = "ChartArea1";
-            series42.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series42.Color = System.Drawing.Color.Chocolate;
-            series42.Legend = "Legend1";
-            series42.Name = "Вторая\\nпроизводная";
-            this.chart2.Series.Add(series41);
-            this.chart2.Series.Add(series42);
+            series5.BorderWidth = 3;
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series5.Color = System.Drawing.Color.SeaGreen;
+            series5.Legend = "Legend1";
+            series5.Name = "Первая\\nпроизводная";
+            series6.BorderWidth = 3;
+            series6.ChartArea = "ChartArea1";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series6.Color = System.Drawing.Color.Chocolate;
+            series6.Legend = "Legend1";
+            series6.Name = "Вторая\\nпроизводная";
+            this.chart2.Series.Add(series5);
+            this.chart2.Series.Add(series6);
             this.chart2.Size = new System.Drawing.Size(896, 233);
             this.chart2.TabIndex = 31;
             this.chart2.Text = "chart2";
@@ -1472,6 +1552,7 @@
             // 
             // splitContainer2.Panel1
             // 
+            this.splitContainer2.Panel1.Controls.Add(this.button2);
             this.splitContainer2.Panel1.Controls.Add(this.button10);
             this.splitContainer2.Panel1.Controls.Add(this.button9);
             this.splitContainer2.Panel1.Controls.Add(this.button3);
@@ -1482,6 +1563,16 @@
             this.splitContainer2.Size = new System.Drawing.Size(900, 553);
             this.splitContainer2.SplitterDistance = 120;
             this.splitContainer2.TabIndex = 4;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(459, 3);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(146, 63);
+            this.button2.TabIndex = 5;
+            this.button2.Text = "Обновить список";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button10
             // 
@@ -1525,6 +1616,7 @@
             // 
             // TbP5
             // 
+            this.TbP5.Controls.Add(this.label57);
             this.TbP5.Controls.Add(this.button1);
             this.TbP5.Controls.Add(this.txtMSE2);
             this.TbP5.Controls.Add(this.label46);
@@ -1559,20 +1651,29 @@
             this.TbP5.Text = "Статистика";
             this.TbP5.UseVisualStyleBackColor = true;
             // 
+            // label57
+            // 
+            this.label57.AutoSize = true;
+            this.label57.Location = new System.Drawing.Point(10, 249);
+            this.label57.Name = "label57";
+            this.label57.Size = new System.Drawing.Size(126, 26);
+            this.label57.TabIndex = 66;
+            this.label57.Text = "Среднеквадратическое\r\nотклонение";
+            // 
             // button1
             // 
             this.button1.Enabled = false;
-            this.button1.Location = new System.Drawing.Point(382, 218);
+            this.button1.Location = new System.Drawing.Point(382, 276);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(177, 47);
             this.button1.TabIndex = 65;
-            this.button1.Text = "Рассчёт коэффициентов второй способ";
+            this.button1.Text = "Расчёт коэффициентов второй способ";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // txtMSE2
             // 
-            this.txtMSE2.Location = new System.Drawing.Point(12, 372);
+            this.txtMSE2.Location = new System.Drawing.Point(11, 392);
             this.txtMSE2.Name = "txtMSE2";
             this.txtMSE2.ReadOnly = true;
             this.txtMSE2.Size = new System.Drawing.Size(111, 20);
@@ -1581,7 +1682,7 @@
             // label46
             // 
             this.label46.AutoSize = true;
-            this.label46.Location = new System.Drawing.Point(11, 343);
+            this.label46.Location = new System.Drawing.Point(10, 363);
             this.label46.Name = "label46";
             this.label46.Size = new System.Drawing.Size(100, 26);
             this.label46.TabIndex = 64;
@@ -1590,11 +1691,11 @@
             // button8
             // 
             this.button8.Enabled = false;
-            this.button8.Location = new System.Drawing.Point(382, 274);
+            this.button8.Location = new System.Drawing.Point(382, 216);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(177, 50);
             this.button8.TabIndex = 62;
-            this.button8.Text = "Рассчёт коэффициентов\r\nвторой способ";
+            this.button8.Text = "Расчёт критериев";
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
@@ -1649,13 +1750,13 @@
             this.BtnStatCalc.Name = "BtnStatCalc";
             this.BtnStatCalc.Size = new System.Drawing.Size(177, 50);
             this.BtnStatCalc.TabIndex = 56;
-            this.BtnStatCalc.Text = "Рассчёт коэффициентов\r\nпервый способ";
+            this.BtnStatCalc.Text = "Расчёт коэффициентов\r\nпервый способ";
             this.BtnStatCalc.UseVisualStyleBackColor = true;
             this.BtnStatCalc.Click += new System.EventHandler(this.btnCalc_Click);
             // 
             // txtPirson
             // 
-            this.txtPirson.Location = new System.Drawing.Point(14, 502);
+            this.txtPirson.Location = new System.Drawing.Point(13, 522);
             this.txtPirson.Name = "txtPirson";
             this.txtPirson.ReadOnly = true;
             this.txtPirson.Size = new System.Drawing.Size(111, 20);
@@ -1664,7 +1765,7 @@
             // label49
             // 
             this.label49.AutoSize = true;
-            this.label49.Location = new System.Drawing.Point(10, 473);
+            this.label49.Location = new System.Drawing.Point(9, 493);
             this.label49.Name = "label49";
             this.label49.Size = new System.Drawing.Size(140, 26);
             this.label49.TabIndex = 54;
@@ -1672,7 +1773,7 @@
             // 
             // txtStudent
             // 
-            this.txtStudent.Location = new System.Drawing.Point(14, 450);
+            this.txtStudent.Location = new System.Drawing.Point(13, 470);
             this.txtStudent.Name = "txtStudent";
             this.txtStudent.ReadOnly = true;
             this.txtStudent.Size = new System.Drawing.Size(111, 20);
@@ -1681,7 +1782,7 @@
             // label50
             // 
             this.label50.AutoSize = true;
-            this.label50.Location = new System.Drawing.Point(11, 434);
+            this.label50.Location = new System.Drawing.Point(10, 454);
             this.label50.Name = "label50";
             this.label50.Size = new System.Drawing.Size(113, 13);
             this.label50.TabIndex = 52;
@@ -1722,7 +1823,7 @@
             // 
             // textSKO
             // 
-            this.textSKO.Location = new System.Drawing.Point(13, 265);
+            this.textSKO.Location = new System.Drawing.Point(11, 278);
             this.textSKO.Name = "textSKO";
             this.textSKO.ReadOnly = true;
             this.textSKO.Size = new System.Drawing.Size(111, 20);
@@ -1730,7 +1831,7 @@
             // 
             // txtVar
             // 
-            this.txtVar.Location = new System.Drawing.Point(14, 411);
+            this.txtVar.Location = new System.Drawing.Point(13, 431);
             this.txtVar.Name = "txtVar";
             this.txtVar.ReadOnly = true;
             this.txtVar.Size = new System.Drawing.Size(111, 20);
@@ -1739,7 +1840,7 @@
             // label52
             // 
             this.label52.AutoSize = true;
-            this.label52.Location = new System.Drawing.Point(11, 395);
+            this.label52.Location = new System.Drawing.Point(10, 415);
             this.label52.Name = "label52";
             this.label52.Size = new System.Drawing.Size(128, 13);
             this.label52.TabIndex = 47;
@@ -1764,7 +1865,7 @@
             // 
             // txtMSE1
             // 
-            this.txtMSE1.Location = new System.Drawing.Point(12, 317);
+            this.txtMSE1.Location = new System.Drawing.Point(11, 337);
             this.txtMSE1.Name = "txtMSE1";
             this.txtMSE1.ReadOnly = true;
             this.txtMSE1.Size = new System.Drawing.Size(111, 20);
@@ -1781,7 +1882,7 @@
             // label54
             // 
             this.label54.AutoSize = true;
-            this.label54.Location = new System.Drawing.Point(10, 288);
+            this.label54.Location = new System.Drawing.Point(9, 308);
             this.label54.Name = "label54";
             this.label54.Size = new System.Drawing.Size(100, 26);
             this.label54.TabIndex = 45;
@@ -1796,81 +1897,6 @@
             this.label55.TabIndex = 44;
             this.label55.Text = "Сумма кв. отклонениий\r\nпервая таблица";
             // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
-            this.toolStripButton4,
-            this.toolStripButton5,
-            this.toolStripButton2,
-            this.toolStripButton3,
-            this.toolStripButton6});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 44);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(906, 25);
-            this.toolStrip1.TabIndex = 37;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "toolStripButton1";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
-            // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton2.Text = "toolStripButton2";
-            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
-            // 
-            // toolStripButton3
-            // 
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton3.Text = "toolStripButton3";
-            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
-            // 
-            // toolStripButton4
-            // 
-            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
-            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton4.Text = "toolStripButton4";
-            this.toolStripButton4.Click += new System.EventHandler(this.toolStripButton4_Click);
-            // 
-            // toolStripButton5
-            // 
-            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
-            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton5.Name = "toolStripButton5";
-            this.toolStripButton5.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton5.Text = "toolStripButton5";
-            this.toolStripButton5.Click += new System.EventHandler(this.toolStripButton5_Click);
-            // 
-            // toolStripButton6
-            // 
-            this.toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton6.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton6.Image")));
-            this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton6.Name = "toolStripButton6";
-            this.toolStripButton6.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton6.Text = "toolStripButton6";
-            this.toolStripButton6.Click += new System.EventHandler(this.toolStripButton6_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1878,7 +1904,7 @@
             this.ClientSize = new System.Drawing.Size(914, 585);
             this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
-            this.Text = "Регрессия";
+            this.Text = "Информационная система обработки сокращения сердечной мышцы";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -1907,6 +1933,8 @@
             this.groupBox6.PerformLayout();
             this.TbP3.ResumeLayout(false);
             this.TbP3.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -1924,8 +1952,6 @@
             this.TbP5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2090,6 +2116,8 @@
         private System.Windows.Forms.ToolStripButton toolStripButton4;
         private System.Windows.Forms.ToolStripButton toolStripButton5;
         private System.Windows.Forms.ToolStripButton toolStripButton6;
+        private System.Windows.Forms.Label label57;
+        private System.Windows.Forms.Button button2;
     }
 }
 
